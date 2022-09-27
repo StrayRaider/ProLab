@@ -5,6 +5,3 @@
 
 # Deadlines
  - Not specified
-
-# 31 
-- gonna be added 
