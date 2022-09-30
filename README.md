@@ -1,7 +1,2 @@
 # ProLab
-
-# - To Do list
- - Gonna be added
-
-# Deadlines
- - Not specified
+- 2022 Güz dönemi için açılmış prolab projelerini kapsayan repo.
