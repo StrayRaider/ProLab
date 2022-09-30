@@ -16,7 +16,7 @@ Bir etiket birden fazla txt dosyası içerisinde geçebilir
 
 `Etiket formatı:`
 -   Eğer bir kelime etiket ise formatı şu şekillerde olmalıdır:
-    * [[kelime]], [[kelime1 kelime2]]
+    ``` [[kelime]], [[kelime1 kelime2]]```
 -   Hatalı etiket formatları:
-    *[[kelime], [kelime]], [kelime], {{kelime}}
+    ```[[kelime], [kelime]], [kelime], {{kelime}}```
   
