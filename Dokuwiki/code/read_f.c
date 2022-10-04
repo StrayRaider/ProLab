@@ -10,7 +10,7 @@ void read_file(char *file_name, char* file_cont){
     size_t n = 0;
     int c;
     char k;
-    char link[100];
+    char link_list[20][100];
     int index[20][2];
     int act_l = 0;
 
@@ -44,7 +44,7 @@ void read_file(char *file_name, char* file_cont){
                 break;
             else if(k == ']'){
                 stop_i = ftell(file);
-                index[act_l][1]  = stop_i-1;
+                index[act_l][1]  = stop_i-2;
                 if(index[act_l][0] != 0)
                     act_l +=1;
             }
@@ -57,17 +57,21 @@ void read_file(char *file_name, char* file_cont){
     }
     for(int a = 0;a<act_l;a++){
         char c;
-        printf("\n -%d,%d- \n ",index[a][0],index[a][1]);
-        for(int x=index[a][0];x<index[a][1]-1;x++){
+        size_t l_count =0;
+        printf("\n link indexleri : -%d,%d- \n ",index[a][0],index[a][1]);
+        for(int x=index[a][0];x<index[a][1];x++){
             fseek(file,x,SEEK_SET);
             c = fgetc(file);
-            printf("%c\n",c);
+            link_list[a][l_count++] = c;
             }
         }
-    // don't forget to terminate with the null character
     code[n] = '\0';        
     puts(code);
 	fclose(file);
+
+    for(int i=0;i<act_l;i++){
+        printf("%d. link burada : %s\n",i ,link_list[i]);
+    }
 }
 
 void add_txt(char* file_name){

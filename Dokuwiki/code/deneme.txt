@@ -1,3 +1,4 @@
-[[a]]
+[[burası bir link]]
+[[deneme için yapıldı]]
 [[b]
 [c]]
