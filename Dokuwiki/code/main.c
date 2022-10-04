@@ -11,8 +11,6 @@ int main(){
     fgets(file_name, 100,stdin);
     add_txt(file_name);
     puts(file_name);
-    char* file_cont;
-    read_file(file_name,file_cont);
-    puts(file_cont);
+    read_file(file_name);
     return 0;
 }
