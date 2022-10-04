@@ -4,7 +4,7 @@
 
 // parantez içerisinde bulunan stringleri gerekliyse parçalar ve yazar
 // gerekli değilse direkt yazar
-void parse_from_space(char* str,char link_list[50][50],int *last_loc){
+/*void parse_from_space(char* str,char link_list[50][50],int *last_loc){
     const char s[2] = " ";
     char *token;
     token = strtok(str, s);
@@ -13,7 +13,7 @@ void parse_from_space(char* str,char link_list[50][50],int *last_loc){
         strcpy(link_list[*last_loc],token);
         token = strtok(NULL, s);
     }
-}
+}*/
 
 void read_file(char *file_name, char link_list[50][50]){
     FILE *file = fopen(file_name, "r");
@@ -71,7 +71,9 @@ void read_file(char *file_name, char link_list[50][50]){
             c = fgetc(file);
             link[l_count++] = c;
             }
-        parse_from_space(link,link_list,&last_loc);
+        //parse_from_space(link,link_list,&last_loc);
+        strcpy(link_list[last_loc],link);
+        last_loc += 1;
         }
 	fclose(file);
 
