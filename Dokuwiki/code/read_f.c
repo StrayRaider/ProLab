@@ -2,33 +2,41 @@
 #include<string.h>
 #include<stdlib.h>
 
-void read_file(char *file_name, char* file_cont){
-    char * all_file;
-    FILE *file = fopen(file_name, "r");
+// parantez içerisinde bulunan stringleri gerekliyse parçalar ve yazar
+// gerekli değilse direkt yazar
+void parse_from_space(char* str,char link_list[50][50],int *last_loc){
+    const char s[2] = " ";
+    char *token;
+    token = strtok(str, s);
+    for(;token != NULL;*last_loc += 1 ) {
+        //printf( "token:%s\n", token );
+        strcpy(link_list[*last_loc],token);
+        token = strtok(NULL, s);
+    }
+}
 
-    char *code;
-    size_t n = 0;
-    int c;
+void read_file(char *file_name, char link_list[50][50]){
+    FILE *file = fopen(file_name, "r");
+    char c;
     char k;
-    char link_list[20][100];
-    int index[20][2];
+    int index[50][2];
     int act_l = 0;
 
     if (file == NULL)
         printf("error");
-    code = malloc(1000);
 
     int start_i = 0;
     int stop_i = 0;
+    int last_loc = 0;
 
     while ((c = fgetc(file)) != EOF)
     {
+    //indexleri listeye yazmadan öce kullanılacak yeçiyi yer tutucular
     start_i = 0;
     stop_i = 0;
         //parantez açmaları bul indeksleri kaydet
         if (c == '['){
             k = fgetc(file);
-            code[n++] = k;
             if(k == EOF)
                 break;
             else if(k == '['){
@@ -39,7 +47,6 @@ void read_file(char *file_name, char* file_cont){
         //parantez kapamaları bul indeksleri kaydet
         else if (c == ']'){
             k = fgetc(file);
-            code[n++] = k;
             if(k == EOF)
                 break;
             else if(k == ']'){
@@ -53,26 +60,26 @@ void read_file(char *file_name, char* file_cont){
             index[act_l][1] = 0;
             }
         }
-        code[n++] = (char) c;
     }
     for(int a = 0;a<act_l;a++){
         char c;
         size_t l_count =0;
-        printf("\n link indexleri : -%d,%d- \n ",index[a][0],index[a][1]);
+        char link[50] = "";
+        //printf("\n link indexi :-%d,%d-\n",index[a][0],index[a][1]);
         for(int x=index[a][0];x<index[a][1];x++){
             fseek(file,x,SEEK_SET);
             c = fgetc(file);
-            link_list[a][l_count++] = c;
+            link[l_count++] = c;
             }
+        parse_from_space(link,link_list,&last_loc);
         }
-    code[n] = '\0';        
-    puts(code);
 	fclose(file);
 
-    for(int i=0;i<act_l;i++){
-        printf("%d. link burada : %s\n",i ,link_list[i]);
+    //tüm linkleri ekrana bas
+    for(int i=0;i<last_loc;i++){
+        printf("%s\n",link_list[i]);
+        }
     }
-}
 
 void add_txt(char* file_name){
     char txt[5] = ".txt";
@@ -80,3 +87,4 @@ void add_txt(char* file_name){
     strcat(file_name,txt);
     //printf("%s",file_name);
 }
+
