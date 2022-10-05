@@ -5,7 +5,6 @@
 #include<string.h>
 #include"read_f.h"
 #include"file_dir.h"
-#include<string>
 
 int main(){
     printf("Projeye Hoşgeldiniz \n");
