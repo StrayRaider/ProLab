@@ -15,7 +15,8 @@
     }
 }*/
 
-void read_file(char *file_name, char link_list[50][50]){
+void read_file(char *file_name, char link_list[50][50],int *link_count){
+    printf("%s\n",file_name);
     FILE *file = fopen(file_name, "r");
     char c;
     char k;
@@ -24,11 +25,9 @@ void read_file(char *file_name, char link_list[50][50]){
 
     if (file == NULL)
         printf("Dosya açılamadı !");
-        exit(1);
+        //exit(1);
     int start_i = 0;
     int stop_i = 0;
-    int last_loc = 0;
-
     while ((c = fgetc(file)) != EOF)
     {
     //indexleri listeye yazmadan öce kullanılacak yeçiyi yer tutucular
@@ -72,15 +71,15 @@ void read_file(char *file_name, char link_list[50][50]){
             link[l_count++] = c;
             }
         //parse_from_space(link,link_list,&last_loc);
-        strcpy(link_list[last_loc],link);
-        last_loc += 1;
+        strcpy(link_list[*link_count],link);
+        *link_count += 1;
         }
 	fclose(file);
 
     //tüm linkleri ekrana bas
-    for(int i=0;i<last_loc;i++){
+    /*for(int i=0;i<*link_count;i++){
         printf("%s\n",link_list[i]);
-        }
+        }*/
     }
 
 void add_txt(char* file_name){
