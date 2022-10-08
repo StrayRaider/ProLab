@@ -5,11 +5,54 @@
 #include<string.h>
 #include"read_f.h"
 #include"file_dir.h"
+#include"write.h"
 
+struct link{
+	char *name;
+	char *file;
+	int count;
+	};
+
+void set(struct link *r_link,char *name,char*file,int count){
+	strcpy((*r_link).name,name);
+	strcpy((*r_link).file,file);
+    (*r_link).count = count;
+	}
 
 
 int main(){
     printf("Projeye Hoşgeldiniz \n");
+
+
+    //Menüden kullanıcı arama yapabilmeli,
+    //etiketi ve o etikete ait txt dosyasının adını güncelleyebilmeli
+    //ve dosyaya yazma işlemi yapabilmelidir.
+    int run = 1;
+    while (run){
+        printf("Yapacağınız işlemle eşleştirilimiş harf kodunu seçiniz\n");
+        printf("------------------------------------------------------\n");
+        printf("||-|| Arama Yap         :  1 \n");
+        printf("||-|| Etiketi Güncelle  :  2 \n");
+        printf("||-|| Dosyaya Yaz       :  3 \n\n");
+        int inp;
+        scanf("%d",&inp);
+
+        printf("girilen : %d\n",inp);
+        if (inp == 1){
+            printf("Arama Yapılıyor..\n");
+        }
+        if (inp == 2){
+            printf("Etiket Güncelleme işlemi..\n");
+            //etiketin olduğu dosyalar mı gezilecek ?
+            change_index("deneme.txt",3,8,"burayı ben yazdım");
+        }
+        if (inp == 3){
+            printf("Dosyaya Yazılıyor..\n");
+        }
+    break;
+    }
+
+
     char *file_name;
     char link_list[50][50];
 
@@ -33,6 +76,9 @@ int main(){
         printf("%d.dosya : %s \n",i,files[i]);
         read_file(files[i],link_list,&link_count);
         printf("geçti\n");
+    }
+    for(int k = 0;k<link_count;k++){
+        printf("%s",link_list[k]);
     }
 
     printf("\n\n HERE \n\n");
