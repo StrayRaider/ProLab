@@ -1,3 +1,0 @@
-Güz Zorunlu dersler: [[Matematik_I]] , [[Programlama_I]].
-Bahar Zorunlu Dersler: [[Matematik_II]] , [[Programlama_II]].
-Seçmeli Dersler: [[Nesneye Yönelik Programlama]] , [[Görsel Programlama]], [[VeritabanıYönetimi]], [[Tarih!].
