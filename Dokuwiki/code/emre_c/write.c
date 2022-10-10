@@ -20,8 +20,10 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
     fputs(new_word,tmp);
 
     fseek(file,stop_i,SEEK_SET);
-    while ((c = fgetc(file)) != EOF){
+    while (1){
         c = fgetc(file);
+        if(c == EOF)
+            break;
         fputc(c,tmp);
         printf("%c",c);
     }
