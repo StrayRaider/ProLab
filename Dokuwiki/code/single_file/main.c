@@ -3,7 +3,10 @@
 #include<locale.h>
 #include<stdlib.h>
 #include<string.h>
-#include <dirent.h> 
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 //------------------------
 struct link{
@@ -39,7 +42,7 @@ void set_ent(struct link *r_link, int enter_c){
 //---------------------read file-----------
 
 void read_file(char *file_name, struct link link_struct[50],int *link_count){
-    printf("%s\n",file_name);
+    //printf("%s\n",file_name);
     FILE *file = fopen(file_name, "r");
     char c;
     char k;
@@ -87,7 +90,7 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
         char c;
         size_t l_count =0;
         char link[50] = "";
-        printf("\n link indexi :-%d,%d-\n",index[a][0],index[a][1]);
+        //printf("\n link indexi :-%d,%d-\n",index[a][0],index[a][1]);
         for(int x=index[a][0];x<index[a][1];x++){
             fseek(file,x,SEEK_SET);
             c = fgetc(file);
@@ -102,7 +105,7 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
                 n++;
             }
         }
-        printf("/n sayısı : %d \n",n);
+        //printf("/n sayısı : %d \n",n);
         set_ent(&link_struct[*link_count],n);
 
         //struct'a ata
@@ -125,13 +128,14 @@ void add_txt(char* file_name){
 
 //-----------------folder
 
+
 void find_folder(char* path,char folders[50][100], int *folder_count){
     DIR *main_dir;
     main_dir = opendir(path);
     struct dirent *dir;
     if(main_dir){
          while ((dir = readdir(main_dir)) != NULL) {
-                if(dir -> d_type == DT_DIR && strcmp(dir->d_name,".")!=0 &&     strcmp(dir->d_name,"..")!=0 ) // if it is a directory
+                if( dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 ) // if it is a directory
       {
                     *folder_count += 1;
                     char d_path[255];
@@ -139,9 +143,11 @@ void find_folder(char* path,char folders[50][100], int *folder_count){
                     strcpy(d_path,path);
                     strcat(d_path,dir->d_name);
                     strcat(d_path,"/");
+
                     //printf("%s\n",d_path);
                     strcpy(folders[*folder_count],d_path);
                     find_folder(d_path,folders, folder_count);
+                    //printf("%s",d_path);
                     }  
                 }
             }
@@ -153,27 +159,24 @@ void find_file(char* path,char file_names[50][100], char files[50][200], int *fi
     struct dirent *dir;
     if(main_dir){
         while ((dir = readdir(main_dir)) != NULL) {
-            if(dir-> d_type != DT_DIR){
-                char *file_name = dir->d_name;
-                int len = strlen(file_name);
-                const char *extent = &file_name[len-4];
-               
-
-
-                if (!strcmp(extent,".txt")){
-                    char name[50] = "";
-                    strcpy(name,path);
-                    strcat(name,file_name);
-                    strcpy(files[*file_count], name);
-                    //printf("%d. ye yazılan şey : %s\n",*file_count,files[*file_count]);
-                    *file_count += 1;
-                    int k = 0;
-                    k = strlen(file_name) - 4;
-                    file_name[k] = '\0';
-                    printf("txt : %s\n",file_name);
-                    strcpy(file_names[*file_count], file_name);
-                }
-                }
+            //int i = isDir(dir->d_name);
+            //printf("file mı : %d\n",i);
+            char *file_name = dir->d_name;
+            int len = strlen(file_name);
+            const char *extent = &file_name[len-4];
+            if (!strcmp(extent,".txt")){
+                char name[50] = "";
+                strcpy(name,path);
+                strcat(name,file_name);
+                strcpy(files[*file_count], name);
+                //printf("%d. ye yazılan şey : %s\n",*file_count,files[*file_count]);
+                *file_count += 1;
+                int k = 0;
+                k = strlen(file_name) - 4;
+                file_name[k] = '\0';
+                //printf("txt : %s\n",file_name);
+                strcpy(file_names[*file_count], file_name);
+                }               
         }
     closedir(main_dir);
     }
@@ -224,9 +227,89 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 
     }
 
+void fprint_out(struct link link_struct[50], int *link_count){
+    char writed[50][100];
+    FILE *file = fopen("output.txt", "w");
+    fprintf(file,"Etiket Listesi    - Tekrar Sayısı");
+    for(int i = 0; i < *link_count;i++){
+        for(int k = 0 ; k < 50 ;k++){
+            fprintf(file,"%s    -   %s\n",link_struct[i].name,link_struct[i].count);
+            //strcat();
+            }
+        }
+
+   
+    }
+
+void print_struct(struct link *link_struct,int k){
+    printf("name               : %s\n", link_struct[k].name);
+	printf("file               : %s\n", link_struct[k].file);
+	printf("start_i            : %d\n", link_struct[k].start_i);
+    printf("stop_i             : %d\n", link_struct[k].stop_i);
+    printf("ent_c              : %d\n", link_struct[k].ent_c);
+    printf("yetim mi           : %d\n", link_struct[k].orphan);
+    printf("link aded sayısı   : %d\n", link_struct[k].count);
+    printf("\n");
+
+}
+
+
 //----main
 
+
 int main(){
+    struct link link_struct[50];
+
+    //folderları bulur
+    int folder_count = 0;
+    char folders[50][100];
+    char path[100] = "../";
+    find_folder(path,folders, &folder_count);
+    //folder içerisindeki .txt leri bulur
+    char files[50][200];
+    char file_names[50][100];
+    int file_count = 0;
+    //printf("folder count : %d\n",folder_count);
+
+    for(int i=0;i<=folder_count;i++){
+        find_file(folders[i],file_names,files,&file_count); 
+    }
+
+    printf("file count : %d\n",file_count);
+    //her dosyayı okuyup tüm linkleri link liste atar
+    int link_count =0;
+    for(int i= 0 ;i < file_count;i++){
+        //printf("%d.dosya : %s \n",i,files[i]);
+        read_file(files[i],link_struct,&link_count);
+    }
+    //yetim mi sorgusu
+    // struct atamaları
+    for(int k = 0;k<link_count;k++){
+
+        //her bir link için
+        link_struct[k].orphan = 1;
+        for(int i =0;i<file_count;i++){
+            if (!strcmp(link_struct[k].name,file_names[i])){
+                //printf("equal!! \n");
+                link_struct[k].orphan = 0;
+            //printf("str : %s\n",link_struct[k].name);
+            }
+        }
+        int last_w = 0;
+        int is_eq = 0;
+        for(int l = 0;l<link_count;l++){
+            if(!strcmp(link_struct[l].name,link_struct[k].name)){
+                is_eq += 1;
+                }
+            }
+            //printf("%d here\n",is_eq);
+            link_struct[k].count = is_eq;
+            if(!is_eq){
+                last_w +=1;
+                }
+        print_struct(link_struct,k);
+    }
+
     printf("Projeye Hoşgeldiniz \n");
     //Menüden kullanıcı arama yapabilmeli,
     //etiketi ve o etikete ait txt dosyasının adını güncelleyebilmeli
@@ -246,6 +329,11 @@ int main(){
 
         if (inp == 1){
             printf("Arama Yapılıyor..\n");
+            //dosyaları listele
+            //input al karşılaştır
+
+            //varsa link arama
+            //yoksa hata
         }
         if (inp == 2){
             printf("||-|| Etiket Güncelleme işlemi..\n");
@@ -257,6 +345,7 @@ int main(){
         }
         if (inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
+            //fprint_out()
         }
         if (inp == 4){
             printf("||-|| çıkılıyor ..\n");
@@ -264,70 +353,9 @@ int main(){
         }
     }
 
-    struct link link_struct[50];
-
-    //char *file_name;
-    char link_list[50][50];
-    //folderları bulur
-    int folder_count = 0;
-    char folders[50][100];
-    char path[100] = "../";
-    find_folder(path,folders, &folder_count);
-    //folder içerisindeki .txt leri bulur
-    char files[50][200];
-    char file_names[50][100];
-    int file_count = 0;
-    printf("folder count : %d\n",folder_count);
-
-    for(int i=0;i<=folder_count;i++){
-        find_file(folders[i],file_names,files,&file_count); 
-    }
-
-    printf("file count : %d\n",file_count);
-    //her dosyayı okuyup tüm linkleri link liste atar
-    int link_count =0;
-    for(int i= 0 ;i < file_count;i++){
-        //printf("%d.dosya : %s \n",i,files[i]);
-        read_file(files[i],link_struct,&link_count);
-    }
-
-    // struct atamaları
-    for(int k = 0;k<link_count;k++){
-
-        //her bir link için
-        link_struct[k].orphan = 1;
-        for(int i =0;i<file_count;i++){
-            if (!strcmp(link_struct[k].name,file_names[i])){
-                printf("equal!! \n");
-                link_struct[k].orphan = 0;
-            //printf("str : %s\n",link_struct[k].name);
-            }
-        }
-        printf("\n\n HERE \n\n");
-        int last_w = 0;
-        int is_eq = 0;
-        for(int l = 0;l<link_count;l++){
-            if(!strcmp(link_struct[l].name,link_struct[k].name)){
-                is_eq += 1;
-                }
-            }
-            printf("%d here\n",is_eq);
-            if(!is_eq){
-                last_w +=1;
-                }
-                
-        
-
-        printf("name    : %s\n", link_struct[k].name);
-	    printf("file    : %s\n", link_struct[k].file);
-	    printf("start_i : %d\n", link_struct[k].start_i);
-	    printf("stop_i  : %d\n", link_struct[k].stop_i);
-        printf("ent_c  : %d\n", link_struct[k].ent_c);
-        printf("yetim mi   : %d\n", link_struct[k].orphan);
-	    printf("\n");
 
 
-    }   
+
     //for(int i=0;i<last_w;i++){
     //    printf("etiket : %s\n",n_link_list[i]);
     //}
