@@ -6,26 +6,14 @@
 #include"read_f.h"
 #include"file_dir.h"
 #include"write.h"
+#include"struct_f.h"
 
 struct link{
-	char *name;
-	char *file;
-	int start_i;
+    char name[50];
+    char file[50];
+    int start_i;
     int stop_i;
-	};
-
-void set_file(struct link *r_link,char *file){
-    printf("!!here\n");
-	strcpy(r_link->file, file);
-	}
-void set_name(struct link *r_link,char *name){
-    printf("%s\n",r_link->name);
-	strcpy(r_link->name, name);
-	}
-void set_ind(struct link *r_link, int start_i, int stop_i){
-    (*r_link).start_i = start_i;
-    (*r_link).stop_i = stop_i;
-    }
+    };
 
 int main(){
     printf("Projeye Hoşgeldiniz \n");
@@ -86,14 +74,14 @@ int main(){
     int link_count =0;
     for(int i= 0 ;i < file_count;i++){
         printf("%d.dosya : %s \n",i,files[i]);
-        read_file(files[i],link_list,&link_count);
+        read_file(files[i],link_struct,&link_count);
     }
+    // struct atamaları
     for(int k = 0;k<link_count;k++){
-        printf("%s\n",link_list[k]);
-        printf("%s : done!\n", link_list[k]);
-        //set_file(&link_struct[k], files[k]);
+        //printf("%s\n",link_list[k]);
+        //printf("%s : done!\n", link_list[k]);
+        set_file(&link_struct[k], files[k]);
         set_name(&link_struct[k], link_list[k]);
-        printf("geçti\n");
     }
 
     printf("\n\n HERE \n\n");
@@ -119,8 +107,7 @@ int main(){
             }
         
     for(int i=0;i<last_w;i++){
-        printf("etiket : %s\n",n_link_list[i]);
-        
+        //printf("etiket : %s\n",n_link_list[i]);
     }
 
     return 0;

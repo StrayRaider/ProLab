@@ -1,21 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include"struct_f.h"
 
-// parantez içerisinde bulunan stringleri gerekliyse parçalar ve yazar
-// gerekli değilse direkt yazar
-/*void parse_from_space(char* str,char link_list[50][50],int *last_loc){
-    const char s[2] = " ";
-    char *token;
-    token = strtok(str, s);
-    for(;token != NULL;*last_loc += 1 ) {
-        //printf( "token:%s\n", token );
-        strcpy(link_list[*last_loc],token);
-        token = strtok(NULL, s);
-    }
-}*/
-
-void read_file(char *file_name, char link_list[50][50],int *link_count){
+void read_file(char *file_name, struct link link_struct[50],int *link_count){
     printf("%s\n",file_name);
     FILE *file = fopen(file_name, "r");
     char c;
@@ -70,16 +58,15 @@ void read_file(char *file_name, char link_list[50][50],int *link_count){
             c = fgetc(file);
             link[l_count++] = c;
             }
-        //parse_from_space(link,link_list,&last_loc);
-        strcpy(link_list[*link_count],link);
+        //struct'a ata
+        set_name(link_struct[*link_count],link);
+        set_file(link_struct[*link_count],file_name);
+        set_ind(link_struct[*link_count],index[a][0],index[a][1]);
+        //strcpy(link_list[*link_count],link);
         *link_count += 1;
         }
-	fclose(file);
 
-    //tüm linkleri ekrana bas
-    /*for(int i=0;i<*link_count;i++){
-        printf("%s\n",link_list[i]);
-        }*/
+	fclose(file);
     }
 
 void add_txt(char* file_name){
