@@ -16,8 +16,7 @@ struct link{
     int start_i;
     int stop_i;
     int ent_c;
-    //yetim mi sorgusu
-    int orphan;
+    int orphan; //yetim mi sorgusu
     int count;
     };
 
@@ -258,6 +257,7 @@ void print_struct(struct link *link_struct,int k){
 
 
 int main(){
+    setlocale(LC_ALL,"Turkish");
     struct link link_struct[50];
 
     //folderları bulur
@@ -349,6 +349,10 @@ int main(){
         }
         if (inp == 4){
             printf("||-|| çıkılıyor ..\n");
+            break;
+        }
+        if (inp != 1||2||3||4){ 
+            printf("hata"); // Kullanici menude string girerse program loop'a dusuyordu.
             break;
         }
     }
