@@ -1,9 +1,9 @@
 Etiket Listesi    - Tekrar Sayısı
-burayı ben yazdım 		-		 2
-burayı ben yazdım 		-		 2
-burayı ben yazdım 		-		 2
-burayı ben yazdımme 		-		 2
-burayı ben yazdımme 		-		 2
+burayı ben yazdım 		-		 4
+burayı ben yazdım 		-		 4
+burayı ben yazdım 		-		 4
+burayı ben yazdım 		-		 4
+burayı ben yazdım 		-		 4
 Ahmet ERDİL 		-		 6
 Programlama I 		-		 2
 Ahmet ERDİL 		-		 6

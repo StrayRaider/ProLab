@@ -237,17 +237,21 @@ void fprint_out(struct link link_struct[50], int *link_count){
     fprintf(file,"Etiket Listesi    - Tekrar Sayısı\n");
     int vc =1;
     fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+    strcpy(writed[0],link_struct[0].name);
     //printf("%d",*link_count);
     for(int i = 0; i < *link_count;i++){
         int counter =0;
         printf("equal!! \n");
         for(int k =0; k < *link_count;k++){
-            if(!strcmp(link_struct[i].name,link_struct[k].name)){
-                counter ++;
+            if(!strcmp(writed[k],link_struct[i].name)){
+                break;
+                }
+            if(k == link_struct[i].count){
+                printf("writeing..");
+                fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+                strcpy(writed[0],link_struct[0].name);
                 }
             }
-        if(link_struct[i].count == counter)
-            fprintf(file,"%s \t\t-\t\t %d\n",link_struct[i].name,link_struct[i].count);
         }
     fclose(file);
     }
