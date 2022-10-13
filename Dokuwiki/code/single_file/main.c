@@ -233,21 +233,33 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
+    char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
     FILE *file = fopen("output.txt", "w");
     fprintf(file,"Etiket Listesi- Tekrar Sayısı\n");
     fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
+    int orp_c = 0;
     for(int i = 0; i < *link_count;i+=1){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 break;
                 }
             if(k == link_struct[i].count){
-                fprintf(file,"%s \t\t-\t\t %d\n",link_struct[i].name,link_struct[i].count);
+                if(link_struct[i].orphan == 1){
+                    strcpy(orp_list[orp_c],link_struct[i].name);
+                    orp_c += 1;
+                    }
+                fprintf(file,"%s \t\t\t\t-\t\t\t\t %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[i],link_struct[i].name);
                 }
             }
         }
+    
+    fprintf(file,"\n\nYetim Etiketler :\n\n\n");
+    for(int o = 0; o < orp_c;o+=1){
+        fprintf(file,"%s\n",orp_list[o]);
+        }
+
     fclose(file);
     }
 

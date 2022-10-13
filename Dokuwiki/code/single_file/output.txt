@@ -1,23 +1,44 @@
-Etiket Listesi    - Tekrar Sayısı
+Etiket Listesi- Tekrar Sayısı
 burayı ben yazdım 		-		 2
-büğrayı ben yazdım 		-		 2
-Ahmet ERDİL 		-		 6
-Programlama I 		-		 2
-Ahmet SAYAR 		-		 2
-Hikmet Hakan GÜREL 		-		 3
-Görsel Programlama 		-		 2
-Programlama I 		-		 2
-Ahmet SAYAR 		-		 2
-Hikmet Hakan GÜREL 		-		 3
-Alev MUTLU 		-		 1
-Hikmet Hakan GÜREL 		-		 3
-Matematik I 		-		 1
-Matematik_I 		-		 1
-Programlama_I 		-		 2
-Matematik_II 		-		 1
-Programlama_II 		-		 1
-Nesneye Yönelik Programlama 		-		 1
-Görsel Programlama 		-		 2
-VeritabanıYönetimi 		-		 1
-ProgramlamaLab 		-		 1
-Programlama_I 		-		 2
+büğrayı ben yazdım 				-				 2
+Ahmet ERDİL 				-				 6
+Programlama I 				-				 2
+Ahmet SAYAR 				-				 2
+Hikmet Hakan GÜREL 				-				 3
+Görsel Programlama 				-				 2
+Programlama I 				-				 2
+Ahmet SAYAR 				-				 2
+Hikmet Hakan GÜREL 				-				 3
+Alev MUTLU 				-				 1
+Hikmet Hakan GÜREL 				-				 3
+Matematik I 				-				 1
+Matematik_I 				-				 1
+Programlama_I 				-				 2
+Matematik_II 				-				 1
+Programlama_II 				-				 1
+Nesneye Yönelik Programlama 				-				 1
+Görsel Programlama 				-				 2
+VeritabanıYönetimi 				-				 1
+ProgramlamaLab 				-				 1
+Programlama_I 				-				 2
+
+
+Yetim Etiketler :
+
+
+büğrayı ben yazdım
+Ahmet ERDİL
+Programlama I
+Ahmet SAYAR
+Hikmet Hakan GÜREL
+Görsel Programlama
+Programlama I
+Ahmet SAYAR
+Hikmet Hakan GÜREL
+Alev MUTLU
+Hikmet Hakan GÜREL
+Matematik I
+Nesneye Yönelik Programlama
+Görsel Programlama
+VeritabanıYönetimi
+ProgramlamaLab
