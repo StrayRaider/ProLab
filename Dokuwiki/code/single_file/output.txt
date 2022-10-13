@@ -1,23 +1,15 @@
 Etiket Listesi    - Tekrar Sayısı
-burayı ben yazdım 		-		 4
-burayı ben yazdım 		-		 4
-burayı ben yazdım 		-		 4
-burayı ben yazdım 		-		 4
-burayı ben yazdım 		-		 4
+burayı ben yazdım 		-		 2
+büğrayı ben yazdım 		-		 2
 Ahmet ERDİL 		-		 6
 Programlama I 		-		 2
-Ahmet ERDİL 		-		 6
-Ahmet ERDİL 		-		 6
-Ahmet ERDİL 		-		 6
 Ahmet SAYAR 		-		 2
 Hikmet Hakan GÜREL 		-		 3
 Görsel Programlama 		-		 2
 Programlama I 		-		 2
-Ahmet ERDİL 		-		 6
 Ahmet SAYAR 		-		 2
 Hikmet Hakan GÜREL 		-		 3
 Alev MUTLU 		-		 1
-Ahmet ERDİL 		-		 6
 Hikmet Hakan GÜREL 		-		 3
 Matematik I 		-		 1
 Matematik_I 		-		 1

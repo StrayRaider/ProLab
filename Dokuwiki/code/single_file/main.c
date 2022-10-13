@@ -234,29 +234,22 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     FILE *file = fopen("output.txt", "w");
-    fprintf(file,"Etiket Listesi    - Tekrar Sayısı\n");
-    int vc =1;
+    fprintf(file,"Etiket Listesi- Tekrar Sayısı\n");
     fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
-    //printf("%d",*link_count);
-    for(int i = 0; i < *link_count;i++){
-        int counter =0;
-        printf("equal!! \n");
-        for(int k =0; k < *link_count;k++){
+    for(int i = 0; i < *link_count;i+=1){
+        for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 break;
                 }
             if(k == link_struct[i].count){
-                printf("writeing..");
-                fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
-                strcpy(writed[0],link_struct[0].name);
+                fprintf(file,"%s \t\t-\t\t %d\n",link_struct[i].name,link_struct[i].count);
+                strcpy(writed[i],link_struct[i].name);
                 }
             }
         }
     fclose(file);
     }
-
-   
 
 void print_struct(struct link *link_struct,int k){
     printf("name               : %s\n", link_struct[k].name);
@@ -347,24 +340,24 @@ int main(){
             //varsa link arama
             //yoksa hata
         }
-        if (inp == 2){
+         else if (inp == 2){
             printf("||-|| Etiket Güncelleme işlemi..\n");
             printf("||-|| değiştirmek istediğiniz etiketi seçiniz");
             char *user_link;
             //scanf("%s",user_link);
             //etiketin olduğu dosyalar mı gezilecek ?
-            change_index("deneme.txt",4,10,"burayı ben yazdım");
+            change_index("deneme.txt",4,10,"büğrayı ben yazdım");
         }
-        if (inp == 3){
+        else if (inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
             fprint_out(link_struct, &link_count);
         }
-        if (inp == 4){
+        else if (inp == 4){
             printf("||-|| çıkılıyor ..\n");
             break;
         }
-        if (inp != 1||2||3||4){ 
-            printf("hata"); // Kullanici menude string girerse program loop'a dusuyordu.
+        else if (inp != 1 || inp != 2 || inp != 3|| inp != 4){ 
+            printf("hata\n"); // Kullanici menude string girerse program loop'a dusuyordu.
             break;
         }
     }
