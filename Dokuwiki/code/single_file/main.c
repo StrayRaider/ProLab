@@ -129,59 +129,65 @@ void add_txt(char* file_name){
 //-----------------folder
 
 
-void find_folder(char* path,char folders[50][100], int *folder_count){
-    DIR *main_dir;
-    main_dir = opendir(path);
-    struct dirent *dir;
-    if(main_dir){
-         while ((dir = readdir(main_dir)) != NULL) {
-                if( dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0 ) // if it is a directory
-      {
-                    *folder_count += 1;
-                    char d_path[255];
-                    strcpy(d_path,"");
-                    strcpy(d_path,path);
-                    strcat(d_path,dir->d_name);
-                    strcat(d_path,"/");
+void del_txt(char *file_name){
+    int k = 0;
+    k = strlen(file_name) - 4;
+    file_name[k] = '\0';
+    printf("txt : %s\n",file_name);
+}
 
-                    //printf("%s\n",d_path);
-                    strcpy(folders[*folder_count],d_path);
-                    find_folder(d_path,folders, folder_count);
-                    //printf("%s",d_path);
-                    }  
+
+int is_txt(char *file_name){
+    int len = strlen(file_name);
+    const char *extent = &file_name[len-4];
+    if (!strcmp(extent,".txt"))
+        return 1;
+    return 0;
+}
+
+void find_f(char* path,char folders[50][100],char files[50][200] ,char file_names[50][100] , int *folder_count, int *file_count){
+    DIR *dir;
+    struct dirent *dent;
+    dir = opendir(path);   
+    if(dir!=NULL)//dir varsa
+    {
+    while((dent=readdir(dir))!=NULL){
+        if((strcmp(dent->d_name,".")==0 || strcmp(dent->d_name,"..")==0 || (*dent->d_name) == '.' ))
+            {
+            }
+        else
+            {
+            char d_path[255];
+            strcpy(d_path,path);
+            strcat(d_path,dent->d_name);
+            DIR *dir_n;
+            dir_n = opendir(d_path);   
+            strcat(d_path,"/");
+            char *file_name = dent->d_name;
+            if(dir_n == NULL){//is file
+                //File
+                char f_path[255];
+                strcpy(f_path,path);
+                strcat(f_path,dent->d_name);
+                if(is_txt(file_name)){
+                    printf("yazılan : %s\n",file_name);
+                    strcpy(files[*file_count],f_path);
+                    *file_count+=1;
+                    printf("path : %s\n",d_path);
+                    del_txt(file_name);
+                    strcpy(file_names[*file_count], file_name);
+                    }
+                }
+            else{//is folder
+                //Folder
+                strcpy(folders[*folder_count],d_path);
+                *folder_count +=1;
+                find_f(d_path,folders,files,file_names,folder_count,file_count);
                 }
             }
         }
-
-void find_file(char* path,char file_names[50][100], char files[50][200], int *file_count){
-    DIR *main_dir;
-    main_dir = opendir(path);
-    struct dirent *dir;
-    if(main_dir){
-        while ((dir = readdir(main_dir)) != NULL) {
-            //int i = isDir(dir->d_name);
-            //printf("file mı : %d\n",i);
-            char *file_name = dir->d_name;
-            int len = strlen(file_name);
-            const char *extent = &file_name[len-4];
-            if (!strcmp(extent,".txt")){
-                char name[50] = "";
-                strcpy(name,path);
-                strcat(name,file_name);
-                strcpy(files[*file_count], name);
-                //printf("%d. ye yazılan şey : %s\n",*file_count,files[*file_count]);
-                *file_count += 1;
-                int k = 0;
-                k = strlen(file_name) - 4;
-                file_name[k] = '\0';
-                //printf("txt : %s\n",file_name);
-                strcpy(file_names[*file_count], file_name);
-                }               
-        }
-    closedir(main_dir);
-    }
+     }
 }
-
 //-------------------------
 
 void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
@@ -195,7 +201,6 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
         c = fgetc(file);
         fputc(c,tmp);
         printf("%c",c);
-
     }
 
     //yenisini yaz
@@ -230,16 +235,25 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     FILE *file = fopen("output.txt", "w");
-    fprintf(file,"Etiket Listesi    - Tekrar Sayısı");
+    fprintf(file,"Etiket Listesi    - Tekrar Sayısı\n");
+    int vc =1;
+    fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+    //printf("%d",*link_count);
     for(int i = 0; i < *link_count;i++){
-        for(int k = 0 ; k < 50 ;k++){
-            fprintf(file,"%s    -   %s\n",link_struct[i].name,link_struct[i].count);
-            //strcat();
+        int counter =0;
+        printf("equal!! \n");
+        for(int k =0; k < *link_count;k++){
+            if(!strcmp(link_struct[i].name,link_struct[k].name)){
+                counter ++;
+                }
             }
+        if(link_struct[i].count == counter)
+            fprintf(file,"%s \t\t-\t\t %d\n",link_struct[i].name,link_struct[i].count);
         }
+    fclose(file);
+    }
 
    
-    }
 
 void print_struct(struct link *link_struct,int k){
     printf("name               : %s\n", link_struct[k].name);
@@ -264,28 +278,22 @@ int main(){
     int folder_count = 0;
     char folders[50][100];
     char path[100] = "../";
-    find_folder(path,folders, &folder_count);
-    //folder içerisindeki .txt leri bulur
     char files[50][200];
     char file_names[50][100];
     int file_count = 0;
-    //printf("folder count : %d\n",folder_count);
-
-    for(int i=0;i<=folder_count;i++){
-        find_file(folders[i],file_names,files,&file_count); 
-    }
-
+    find_f(path ,folders ,files ,file_names ,&folder_count ,&file_count);
+    //folder içerisindeki .txt leri bulur
+    printf("folder count : %d\n",folder_count);
     printf("file count : %d\n",file_count);
     //her dosyayı okuyup tüm linkleri link liste atar
     int link_count =0;
     for(int i= 0 ;i < file_count;i++){
-        //printf("%d.dosya : %s \n",i,files[i]);
+        printf("%d.dosya : %s \n",i,files[i]);
         read_file(files[i],link_struct,&link_count);
     }
     //yetim mi sorgusu
     // struct atamaları
     for(int k = 0;k<link_count;k++){
-
         //her bir link için
         link_struct[k].orphan = 1;
         for(int i =0;i<file_count;i++){
@@ -345,7 +353,7 @@ int main(){
         }
         if (inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
-            //fprint_out()
+            fprint_out(link_struct, &link_count);
         }
         if (inp == 4){
             printf("||-|| çıkılıyor ..\n");
