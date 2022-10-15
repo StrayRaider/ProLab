@@ -12,7 +12,7 @@
 struct link{
     char name[50];
     char file[50];
-    char link_file[50];
+    char path[50];
     int start_i;
     int stop_i;
     int ent_c;
@@ -20,8 +20,8 @@ struct link{
     int count;
     };
 
-void set_link_file(struct link *r_link,char link_file[50]){
-    strcpy(r_link->link_file, link_file);
+void set_path(struct link *r_link,char path[50]){
+    strcpy(r_link->path, path);
     }
 void set_file(struct link *r_link,char file[50]){
     strcpy(r_link->file, file);
@@ -169,6 +169,7 @@ void find_f(char* path,char folders[50][100],char files[50][200] ,char file_name
                 strcpy(f_path,path);
                 strcat(f_path,dent->d_name);
                 if(is_txt(file_name)){
+                    printf("path : %s\n",path);
                     printf("yazılan : %s\n",file_name);
                     strcpy(files[*file_count],f_path);
                     *file_count+=1;
@@ -231,6 +232,24 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 
     }
 
+void print_links(struct link link_struct[50], int *link_count){
+    char writed[50][100];
+    printf("Etiket Listesi- Tekrar Sayısı\n");
+    printf("%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+    strcpy(writed[0],link_struct[0].name);
+    for(int i = 0; i < *link_count;i+=1){
+        for(int k =0; k < *link_count;k+=1){
+            if(!strcmp(writed[k],link_struct[i].name)){
+                break;
+                }
+            if(k == link_struct[i].count){
+                printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
+                strcpy(writed[i],link_struct[i].name);
+                }
+            }
+        }
+    }
+
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
@@ -249,7 +268,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
-                fprintf(file,"%s \t\t\t\t-\t\t\t\t %d\n",link_struct[i].name,link_struct[i].count);
+                fprintf(file,"%70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[i],link_struct[i].name);
                 }
             }
@@ -265,11 +284,18 @@ void fprint_out(struct link link_struct[50], int *link_count){
 
 void print_struct(struct link *link_struct,int k){
     printf("name               : %s\n", link_struct[k].name);
+	printf("link_file          : %s\n", link_struct[k].path);
 	printf("file               : %s\n", link_struct[k].file);
 	printf("start_i            : %d\n", link_struct[k].start_i);
     printf("stop_i             : %d\n", link_struct[k].stop_i);
     printf("ent_c              : %d\n", link_struct[k].ent_c);
-    printf("yetim mi           : %d\n", link_struct[k].orphan);
+    if(link_struct[k].orphan == 1){
+        printf("yetim_e\n");
+    }
+    else{
+        printf("yetim olmayan etiket \n");
+    }
+    //printf("yetim mi           : %d\n", link_struct[k].orphan);
     printf("link aded sayısı   : %d\n", link_struct[k].count);
     printf("\n");
 
@@ -346,19 +372,62 @@ int main(){
 
         if (inp == 1){
             printf("Arama Yapılıyor..\n");
-            //dosyaları listele
-            //input al karşılaştır
+            printf("Arama Yapmak istediğiniz Kelimeyi giriniz : ");
+            char search_w[100];
+            fscanf(stdin,"%s",search_w);
+            printf("girilen : %s\n",search_w);
+            //linkler arasında ara
+            for(int i=0; i<link_count ;i += 1){
+                if(!strcmp(search_w,link_struct[i].name)){
+                    printf("Bulundu ! ;\n");
+                    print_struct(link_struct,i);
+                }
+            //str str ile dosya içerisinde kelime ara
 
-            //varsa link arama
-            //yoksa hata
+            }
+
         }
          else if (inp == 2){
             printf("||-|| Etiket Güncelleme işlemi..\n");
-            printf("||-|| değiştirmek istediğiniz etiketi seçiniz");
-            char *user_link;
-            //scanf("%s",user_link);
+            //etiket isimlerinin listelenmesi
+            printf("Linklerin Listesi : \n");
+            print_links(link_struct,&link_count);
+            printf("||-|| değiştirmek istediğiniz etiketin adını giriniz :");
+            char search_w[100];
+            fscanf(stdin,"%s",search_w);
+            printf("girilen : %s\n",search_w);
+            //yazılan listede var mı?
+            int ind_l[10];
+            int counter =0;
+            for(int i=0;i<link_count;i+=1){
+                if(!strcmp(search_w, link_struct[i].name)){
+                    printf("listede var\n");
+                    ind_l[counter] = i;
+                    counter += 1;
+                }
+            }
+            if(counter != 0){
+                char new_link_name[50];
+                printf("linke vermek istediğiniz yeni ismi giriniz :");
+                fscanf(stdin,"%s",new_link_name);
+                for(int i=0;i < counter;i+=1){
+                    //link adını değiştir
+                    set_name(&link_struct[ind_l[i]], new_link_name);
+                    //dosyada yazan ismi değiştir
+                    printf("döndü %s \n",link_struct[ind_l[i]].file);
+                    change_index(link_struct[ind_l[i]].file,link_struct[ind_l[i]].start_i,link_struct[ind_l[i]].stop_i,new_link_name);
+                    //link yetim değil ise dosya adını değiştir 
+                    if(link_struct[ind_l[i]].orphan != 1){
+                        printf("first new link :%s\n",new_link_name);
+                        //add_txt(new_link_name);
+                        printf("file name :%s\n",new_link_name);
+                        set_file(&link_struct[ind_l[i]],new_link_name);
+                        printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
+                        //rename(link_struct[ind_l[i]].);
+                        }
+                    }
+                }
             //etiketin olduğu dosyalar mı gezilecek ?
-            change_index("deneme.txt",4,10,"büğrayı ben yazdım");
         }
         else if (inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
