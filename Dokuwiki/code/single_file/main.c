@@ -13,6 +13,7 @@ struct link{
     char name[100];
     char file[100];
     char path[100];
+    char linked_f[100];
     int start_i;
     int stop_i;
     int ent_c;
@@ -20,19 +21,28 @@ struct link{
     int count;
     };
 
+
+void set_linked_file(struct link *r_link,char linked_f[100]){
+    strcpy(r_link->linked_f, linked_f);
+    }
+
 void set_path(struct link *r_link,char path[100]){
     strcpy(r_link->path, path);
     }
+
 void set_file(struct link *r_link,char file[100]){
     strcpy(r_link->file, file);
     }
+
 void set_name(struct link *r_link,char name[100]){
     strcpy(r_link->name, name);
     }
+
 void set_ind(struct link *r_link, int start_i, int stop_i){
     (*r_link).start_i = start_i;
     (*r_link).stop_i = stop_i;
     }
+
 void set_ent(struct link *r_link, int enter_c){
     (*r_link).ent_c = enter_c;
     }
@@ -182,12 +192,13 @@ void find_f(char* path,char folders[50][100],char files[50][200] ,char file_name
                 strcat(f_path,dent->d_name);
                 if(is_txt(file_name)){
                     printf("path : %s\n",path);
-                    printf("yazılan : %s\n",file_name);
+                    printf("yazılan fn: %s\n",file_name);
+                    printf("yazılan f: %s\n",f_path);
                     strcpy(files[*file_count],f_path);
-                    *file_count+=1;
                     printf("path : %s\n",d_path);
                     del_txt(file_name);
                     strcpy(file_names[*file_count], file_name);
+                    *file_count+=1;
                     }
                 }
             else{//is folder
@@ -345,10 +356,14 @@ int main(){
         link_struct[k].orphan = 1;
         for(int i =0;i<file_count;i++){
             if (!strcmp(link_struct[k].name,file_names[i])){
-                //printf("equal!! \n");
+                printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
                 link_struct[k].orphan = 0;
+                set_linked_file(&link_struct[k], files[i]);
             //printf("str : %s\n",link_struct[k].name);
-            }
+                }
+            else{
+                
+                }
         }
         int last_w = 0;
         int is_eq = 0;
@@ -439,7 +454,11 @@ int main(){
                         set_file(&link_struct[ind_l[i]],new_link_name);
                         printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
                         //dosya adını değiştir
-                        //rename(link_struct[ind_l[i]].);
+                        char new_file_name[100];
+                        strcpy(new_file_name, link_struct[ind_l[i]].path);
+                        strcat(new_file_name, new_link_name);
+                        rename(link_struct[ind_l[i]].file,new_file_name);
+                        printf("yeni file ismi :%s\n",new_file_name);
                         }
                     }
                 }
