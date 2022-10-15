@@ -10,9 +10,9 @@
 
 //------------------------
 struct link{
-    char name[50];
-    char file[50];
-    char path[50];
+    char name[100];
+    char file[100];
+    char path[100];
     int start_i;
     int stop_i;
     int ent_c;
@@ -20,13 +20,13 @@ struct link{
     int count;
     };
 
-void set_path(struct link *r_link,char path[50]){
+void set_path(struct link *r_link,char path[100]){
     strcpy(r_link->path, path);
     }
-void set_file(struct link *r_link,char file[50]){
+void set_file(struct link *r_link,char file[100]){
     strcpy(r_link->file, file);
     }
-void set_name(struct link *r_link,char name[50]){
+void set_name(struct link *r_link,char name[100]){
     strcpy(r_link->name, name);
     }
 void set_ind(struct link *r_link, int start_i, int stop_i){
@@ -37,6 +37,17 @@ void set_ent(struct link *r_link, int enter_c){
     (*r_link).ent_c = enter_c;
     }
 
+
+void f_to_path(char *file, char path[100]){
+    int k = 0;
+    strcpy(path,file);
+    for(k = strlen(path); k>0; k-=1){
+        if(path[k] == '/'){
+            path[k+1] = '\0';
+            break;
+        }
+    }
+}
 
 //---------------------read file-----------
 
@@ -88,7 +99,7 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
     for(int a = 0;a<act_l;a++){
         char c;
         size_t l_count =0;
-        char link[50] = "";
+        char link[100] = "";
         //printf("\n link indexi :-%d,%d-\n",index[a][0],index[a][1]);
         for(int x=index[a][0];x<index[a][1];x++){
             fseek(file,x,SEEK_SET);
@@ -106,10 +117,12 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
         }
         //printf("/n sayısı : %d \n",n);
         set_ent(&link_struct[*link_count],n);
-
         //struct'a ata
         set_name(&link_struct[*link_count],link);
         set_file(&link_struct[*link_count],file_name);
+        char path[100];
+        f_to_path(file_name, path);
+        set_path(&link_struct[*link_count],path);
         set_ind(&link_struct[*link_count],index[a][0],index[a][1]);
         //strcpy(link_list[*link_count],link);
         *link_count += 1;
@@ -134,7 +147,6 @@ void del_txt(char *file_name){
     file_name[k] = '\0';
     printf("txt : %s\n",file_name);
 }
-
 
 int is_txt(char *file_name){
     int len = strlen(file_name);
@@ -284,7 +296,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
 
 void print_struct(struct link *link_struct,int k){
     printf("name               : %s\n", link_struct[k].name);
-	printf("link_file          : %s\n", link_struct[k].path);
+	printf("path               : %s\n", link_struct[k].path);
 	printf("file               : %s\n", link_struct[k].file);
 	printf("start_i            : %d\n", link_struct[k].start_i);
     printf("stop_i             : %d\n", link_struct[k].stop_i);
@@ -406,14 +418,16 @@ int main(){
                     counter += 1;
                 }
             }
+            //listede var ise
             if(counter != 0){
-                char new_link_name[50];
+                //linkin adını değiştir
+                char new_link_name[100];
                 printf("linke vermek istediğiniz yeni ismi giriniz :");
                 fscanf(stdin,"%s",new_link_name);
                 for(int i=0;i < counter;i+=1){
-                    //link adını değiştir
+                    //link struct adını değiştir
                     set_name(&link_struct[ind_l[i]], new_link_name);
-                    //dosyada yazan ismi değiştir
+                    //dosyada yazanı değiştir
                     printf("döndü %s \n",link_struct[ind_l[i]].file);
                     change_index(link_struct[ind_l[i]].file,link_struct[ind_l[i]].start_i,link_struct[ind_l[i]].stop_i,new_link_name);
                     //link yetim değil ise dosya adını değiştir 
@@ -421,8 +435,10 @@ int main(){
                         printf("first new link :%s\n",new_link_name);
                         //add_txt(new_link_name);
                         printf("file name :%s\n",new_link_name);
+                        //structdaki dosya adını değiştir
                         set_file(&link_struct[ind_l[i]],new_link_name);
                         printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
+                        //dosya adını değiştir
                         //rename(link_struct[ind_l[i]].);
                         }
                     }
