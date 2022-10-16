@@ -141,16 +141,6 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
 	fclose(file);
     }
 
-void add_txt(char* file_name){
-    char txt[5] = ".txt";
-    file_name[strlen(file_name)-1] = '\0';
-    strcat(file_name,txt);
-    //printf("%s",file_name);
-}
-
-//-----------------folder
-
-
 void del_txt(char *file_name){
     int k = 0;
     k = strlen(file_name) - 4;
@@ -247,12 +237,8 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
     while ((l = fgetc(r_tmp)) != EOF){
         fputc(l,last_file);
     }
-    //arasını sil ve ya bir şekilde değiştir
-    //yenisini yaz
     fclose(last_file);
     fclose(r_tmp);
-    //kapat
-
     }
 
 void print_links(struct link link_struct[50], int *link_count){
@@ -331,14 +317,11 @@ void change_space(char file_name[100]){
     for(int i=0;i < strlen(file_name);i++){
         if(file_name[i] == ' '){
             file_name[i] = '_';
-            }
         }
-    printf("%s",file_name);
+    }
 }
 
-
 //----main
-
 
 int main(){
     setlocale(LC_ALL,"Turkish");
@@ -438,13 +421,14 @@ int main(){
             print_links(link_struct,&link_count);
             printf("||-|| değiştirmek istediğiniz etiketin adını giriniz :");
             char search_w[100];
-            //fscanf(stdin,"%s",search_w);
             fgets(search_w,100,stdin);
             search_w[strcspn(search_w, "\n")] = '\0';
             printf("girilen : %s\n",search_w);
             //yazılan listede var mı?
+
             int ind_l[10];
             int counter =0;
+            printf("lc : %d\n",link_count);
             for(int i=0;i<link_count;i+=1){
                 if(!strcmp(search_w, link_struct[i].name)){
                     printf("listede var\n");
@@ -459,7 +443,6 @@ int main(){
                 printf("linke vermek istediğiniz yeni ismi giriniz :");
                 fgets(new_link_name,100,stdin);
                 new_link_name[strcspn(new_link_name, "\n")] = '\0';
-                //fscanf(stdin,"%s",new_link_name);
                 for(int i=0;i < counter;i+=1){
                     //link struct adını değiştir
                     set_name(&link_struct[ind_l[i]], new_link_name);
@@ -468,9 +451,6 @@ int main(){
                     change_index(link_struct[ind_l[i]].file,link_struct[ind_l[i]].start_i,link_struct[ind_l[i]].stop_i,new_link_name);
                     //link yetim değil ise dosya adını değiştir 
                     if(link_struct[ind_l[i]].orphan != 1){
-                        printf("first new link :%s\n",new_link_name);
-                        //add_txt(new_link_name);
-                        printf("file name :%s\n",new_link_name);
                         //structdaki dosya adını değiştir
                         set_file(&link_struct[ind_l[i]],new_link_name);
                         printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
@@ -487,10 +467,9 @@ int main(){
                         }
                     }
                 }
-                else{
+            else{
                 printf("listede yok !\n");
                 }
-            //etiketin olduğu dosyalar mı gezilecek ?
         }
         else if (inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
@@ -500,19 +479,11 @@ int main(){
             printf("||-|| çıkılıyor ..\n");
             break;
         }
-        else if (inp != 1 || inp != 2 || inp != 3|| inp != 4){ 
-            printf("hata\n"); // Kullanici menude string girerse program loop'a dusuyordu.
+        else{ 
+            printf("hata\n");
             break;
         }
     }
 
-
-
-
-    //for(int i=0;i<last_w;i++){
-    //    printf("etiket : %s\n",n_link_list[i]);
-    //}
     return 0;
 }
-
-
