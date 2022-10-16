@@ -267,7 +267,7 @@ void print_links(struct link link_struct[50], int *link_count){
                 }
             if(k == link_struct[i].count){
                 printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[i],link_struct[i].name);
+                strcpy(writed[k],link_struct[i].name);
                 }
             }
         }
@@ -281,18 +281,20 @@ void fprint_out(struct link link_struct[50], int *link_count){
     fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     int orp_c = 0;
+    //printf("lc : %d",*link_count);
     for(int i = 0; i < *link_count;i+=1){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
+                printf("burası : %d",i);
                 break;
                 }
-            if(k == link_struct[i].count){
+            else if(k == link_struct[i].count){
                 if(link_struct[i].orphan == 1){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
                 fprintf(file,"%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[i],link_struct[i].name);
+                strcpy(writed[k],link_struct[i].name);
                 }
             }
         }
