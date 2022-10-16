@@ -291,7 +291,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
-                fprintf(file,"%70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
+                fprintf(file,"%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[i],link_struct[i].name);
                 }
             }
@@ -309,6 +309,7 @@ void print_struct(struct link *link_struct,int k){
     printf("name               : %s\n", link_struct[k].name);
 	printf("path               : %s\n", link_struct[k].path);
 	printf("file               : %s\n", link_struct[k].file);
+	printf("connected file     : %s\n", link_struct[k].linked_f);
 	printf("start_i            : %d\n", link_struct[k].start_i);
     printf("stop_i             : %d\n", link_struct[k].stop_i);
     printf("ent_c              : %d\n", link_struct[k].ent_c);
@@ -359,10 +360,12 @@ int main(){
                 printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
                 link_struct[k].orphan = 0;
                 set_linked_file(&link_struct[k], files[i]);
+                break;
             //printf("str : %s\n",link_struct[k].name);
                 }
             else{
-                
+                char tmp[100] = " ";
+                set_linked_file(&link_struct[k], tmp);
                 }
         }
         int last_w = 0;
@@ -455,9 +458,13 @@ int main(){
                         printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
                         //dosya adını değiştir
                         char new_file_name[100];
-                        strcpy(new_file_name, link_struct[ind_l[i]].path);
+                        //linked_file_path
+
+                        char l_f_path[100];
+                        f_to_path(link_struct[ind_l[i]].linked_f, l_f_path);
+                        strcpy(new_file_name, l_f_path);
                         strcat(new_file_name, new_link_name);
-                        rename(link_struct[ind_l[i]].file,new_file_name);
+                        rename(link_struct[ind_l[i]].linked_f,new_file_name);
                         printf("yeni file ismi :%s\n",new_file_name);
                         }
                     }

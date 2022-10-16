@@ -1,44 +1,62 @@
 Etiket Listesi- Tekrar Sayısı
-burayı ben yazdım 		-		 2
-büğrayı ben yazdım 				-				 2
-Ahmet ERDİL 				-				 6
-Programlama I 				-				 2
-Ahmet SAYAR 				-				 2
-Hikmet Hakan GÜREL 				-				 3
-Görsel Programlama 				-				 2
-Programlama I 				-				 2
-Ahmet SAYAR 				-				 2
-Hikmet Hakan GÜREL 				-				 3
-Alev MUTLU 				-				 1
-Hikmet Hakan GÜREL 				-				 3
-Matematik I 				-				 1
-Matematik_I 				-				 1
-Programlama_I 				-				 2
-Matematik_II 				-				 1
-Programlama_II 				-				 1
-Nesneye Yönelik Programlama 				-				 1
-Görsel Programlama 				-				 2
-VeritabanıYönetimi 				-				 1
-ProgramlamaLab 				-				 1
-Programlama_I 				-				 2
+Programlama_III 		-		 2
+Mat_I                                                                  	-	 2
+Pro_II                                                                 	-	 4
+Mat_II                                                                 	-	 2
+Nesneye Yönelik Programlama                                           	-	 2
+Görsel Programlama                                                    	-	 3
+VeritabanıYönetimi                                                   	-	 2
+deneme                                                                 	-	 1
+Ahmet ERDİL                                                           	-	 5
+Programlama I                                                          	-	 2
+Ahmet ERDİL                                                           	-	 5
+Ahmet ERDİL                                                           	-	 5
+Ahmet SAYAR                                                            	-	 2
+Hikmet Hakan GÜREL                                                    	-	 3
+Görsel Programlama                                                    	-	 3
+Programlama I                                                          	-	 2
+Ahmet ERDİL                                                           	-	 5
+Ahmet SAYAR                                                            	-	 2
+Hikmet Hakan GÜREL                                                    	-	 3
+Alev MUTLU                                                             	-	 1
+Ahmet ERDİL                                                           	-	 5
+Hikmet Hakan GÜREL                                                    	-	 3
+Matematik I                                                            	-	 1
+Mat_II                                                                 	-	 2
+Nesneye Yönelik Programlama                                           	-	 2
+Görsel Programlama                                                    	-	 3
+VeritabanıYönetimi                                                   	-	 2
+ProLab                                                                 	-	 2
+ProLab                                                                 	-	 2
 
 
 Yetim Etiketler :
 
 
-büğrayı ben yazdım
-Ahmet ERDİL
-Programlama I
-Ahmet SAYAR
-Hikmet Hakan GÜREL
-Görsel Programlama
-Programlama I
-Ahmet SAYAR
-Hikmet Hakan GÜREL
-Alev MUTLU
-Hikmet Hakan GÜREL
-Matematik I
+Mat_I
+Pro_II
+Mat_II
 Nesneye Yönelik Programlama
 Görsel Programlama
 VeritabanıYönetimi
-ProgramlamaLab
+Ahmet ERDİL
+Programlama I
+Ahmet ERDİL
+Ahmet ERDİL
+Ahmet SAYAR
+Hikmet Hakan GÜREL
+Görsel Programlama
+Programlama I
+Ahmet ERDİL
+Ahmet SAYAR
+Hikmet Hakan GÜREL
+Alev MUTLU
+Ahmet ERDİL
+Hikmet Hakan GÜREL
+Matematik I
+Mat_II
+Nesneye Yönelik Programlama
+Görsel Programlama
+VeritabanıYönetimi
+ProLab
+ProLab
