@@ -1,53 +1,37 @@
 Etiket Listesi- Tekrar Sayısı
 Programlama_III 		-		 2
-Mat_I                                                                  	-	 1
-Pro_II                                                                 	-	 2
-Mat_II                                                                 	-	 1
-Nesneye Yönelik Programlama                                           	-	 2
+Emre Kaya                                                              	-	 5
+Ahmet SAYAR                                                            	-	 2
+Hikmet Hakan GÜREL                                                    	-	 2
 Görsel Programlama                                                    	-	 3
-VeritabanıYönetimi                                                   	-	 2
 deneme                                                                 	-	 1
-Ahmet ERDİL                                                           	-	 6
-Programlama I                                                          	-	 2
+                                                                       	-	 2
 Ahmet SAYAR                                                            	-	 2
-Hikmet Hakan GÜREL                                                    	-	 3
-Görsel Programlama                                                    	-	 3
-Programlama I                                                          	-	 2
-Ahmet SAYAR                                                            	-	 2
-Hikmet Hakan GÜREL                                                    	-	 3
-Alev MUTLU                                                             	-	 1
-Matematik I                                                            	-	 1
-Matematik_I                                                            	-	 1
-Programlama_I                                                          	-	 2
+Hikmet Hakan GÜREL                                                    	-	 2
+                                                                       	-	 2
+Programlama I                                                          	-	 1
 Matematik_II                                                           	-	 1
 Programlama_II                                                         	-	 1
-Nesneye Yönelik Programlama                                           	-	 2
-Görsel Programlama                                                    	-	 3
-VeritabanıYönetimi                                                   	-	 2
+Nesneye Yönelik Programlama                                           	-	 1
+VeritabanıYönetimi                                                   	-	 1
 ProgramlamaLab                                                         	-	 1
-Programlama_I                                                          	-	 2
+Programlama_I                                                          	-	 1
 
 
 Yetim Etiketler :
 
 
-Mat_I
-Pro_II
-Mat_II
-Nesneye Yönelik Programlama
-Görsel Programlama
-VeritabanıYönetimi
-Ahmet ERDİL
-Programlama I
+Emre Kaya
 Ahmet SAYAR
 Hikmet Hakan GÜREL
 Görsel Programlama
-Programlama I
+
 Ahmet SAYAR
 Hikmet Hakan GÜREL
-Alev MUTLU
-Matematik I
+
+Programlama I
+Matematik_II
 Nesneye Yönelik Programlama
-Görsel Programlama
 VeritabanıYönetimi
 ProgramlamaLab
+Programlama_I

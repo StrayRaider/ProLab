@@ -327,6 +327,15 @@ void print_struct(struct link *link_struct,int k){
 
 }
 
+void change_space(char file_name[100]){
+    for(int i=0;i < strlen(file_name);i++){
+        if(file_name[i] == ' '){
+            file_name[i] = '_';
+            }
+        }
+    printf("%s",file_name);
+}
+
 
 //----main
 
@@ -399,8 +408,11 @@ int main(){
         printf("||-|| Çıkış             :  4 |\n");
         printf("-----------------------------\n\n");
         int inp;
+        char ln;
         printf("||-|| ");
         scanf("%d",&inp);
+        scanf("%c",&ln);
+        printf("girilenn :%d\n",inp);
 
         if (inp == 1){
             printf("Arama Yapılıyor..\n");
@@ -426,7 +438,9 @@ int main(){
             print_links(link_struct,&link_count);
             printf("||-|| değiştirmek istediğiniz etiketin adını giriniz :");
             char search_w[100];
-            fscanf(stdin,"%s",search_w);
+            //fscanf(stdin,"%s",search_w);
+            fgets(search_w,100,stdin);
+            search_w[strcspn(search_w, "\n")] = '\0';
             printf("girilen : %s\n",search_w);
             //yazılan listede var mı?
             int ind_l[10];
@@ -439,11 +453,13 @@ int main(){
                 }
             }
             //listede var ise
-            if(counter != 0){
+            if(counter > 0){
                 //linkin adını değiştir
                 char new_link_name[100];
                 printf("linke vermek istediğiniz yeni ismi giriniz :");
-                fscanf(stdin,"%s",new_link_name);
+                fgets(new_link_name,100,stdin);
+                new_link_name[strcspn(new_link_name, "\n")] = '\0';
+                //fscanf(stdin,"%s",new_link_name);
                 for(int i=0;i < counter;i+=1){
                     //link struct adını değiştir
                     set_name(&link_struct[ind_l[i]], new_link_name);
@@ -460,16 +476,19 @@ int main(){
                         printf("file a yazılan :%s\n",link_struct[ind_l[i]].name);
                         //dosya adını değiştir
                         char new_file_name[100];
-                        //linked_file_path
-
+                        change_space(new_link_name);
                         char l_f_path[100];
                         f_to_path(link_struct[ind_l[i]].linked_f, l_f_path);
                         strcpy(new_file_name, l_f_path);
                         strcat(new_file_name, new_link_name);
+                        strcat(new_file_name, ".txt");
                         rename(link_struct[ind_l[i]].linked_f,new_file_name);
                         printf("yeni file ismi :%s\n",new_file_name);
                         }
                     }
+                }
+                else{
+                printf("listede yok !\n");
                 }
             //etiketin olduğu dosyalar mı gezilecek ?
         }
