@@ -4,9 +4,6 @@
 #include<stdlib.h>
 #include<string.h>
 #include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 //------------------------
 struct link{
@@ -156,6 +153,13 @@ int is_txt(char *file_name){
     return 0;
 }
 
+int max_blm_num(char files[50][200],int file_count){
+    for(int i =0;i<file_count;i+=!){
+
+}
+
+}
+
 void find_f(char* path,char folders[50][100],char files[50][200] ,char file_names[50][100] , int *folder_count, int *file_count){
     DIR *dir;
     struct dirent *dent;
@@ -243,8 +247,8 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 
 void print_links(struct link link_struct[50], int *link_count){
     char writed[50][100];
-    printf("Etiket Listesi- Tekrar Sayısı\n");
-    printf("%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+    printf("Etiket Listesi              -                  Tekrar Sayısı\n");
+    printf("%-50s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     for(int i = 0; i < *link_count;i+=1){
         for(int k =0; k < *link_count;k+=1){
@@ -263,8 +267,8 @@ void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
     FILE *file = fopen("output.txt", "w");
-    fprintf(file,"Etiket Listesi- Tekrar Sayısı\n");
-    fprintf(file,"%s \t\t-\t\t %d\n",link_struct[0].name,link_struct[0].count);
+    fprintf(file,"Etiket Listesi                                            -  Tekrar Sayısı\n");
+    fprintf(file,"%-70s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     int orp_c = 0;
     //printf("lc : %d",*link_count);
@@ -294,21 +298,20 @@ void fprint_out(struct link link_struct[50], int *link_count){
     }
 
 void print_struct(struct link *link_struct,int k){
-    printf("name               : %s\n", link_struct[k].name);
-	printf("path               : %s\n", link_struct[k].path);
-	printf("file               : %s\n", link_struct[k].file);
-	printf("connected file     : %s\n", link_struct[k].linked_f);
-	printf("start_i            : %d\n", link_struct[k].start_i);
-    printf("stop_i             : %d\n", link_struct[k].stop_i);
-    printf("ent_c              : %d\n", link_struct[k].ent_c);
+    printf("Link adı             : %s\n", link_struct[k].name);
+	//printf("path               : %s\n", link_struct[k].path);
+	printf("bulunduğu dosya      : %s\n", link_struct[k].file);
+	//printf("start_i            : %d\n", link_struct[k].start_i);
+    //printf("stop_i             : %d\n", link_struct[k].stop_i);
+    //printf("ent_c              : %d\n", link_struct[k].ent_c);
     if(link_struct[k].orphan == 1){
-        printf("yetim_e\n");
+        printf("yetim mi             : yetim_e\n");
     }
     else{
-        printf("yetim olmayan etiket \n");
+        printf("yetim mi             :yetim olmayan etiket \n");
+	    printf("bağladığı dosya      : %s\n", link_struct[k].linked_f);
     }
-    //printf("yetim mi           : %d\n", link_struct[k].orphan);
-    printf("link aded sayısı   : %d\n", link_struct[k].count);
+    printf("link aded sayısı     : %d\n", link_struct[k].count);
     printf("\n");
 
 }
@@ -321,6 +324,50 @@ void change_space(char file_name[100]){
     }
 }
 
+void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
+    FILE* file = fopen(file_name, "r"); /* should check the result */
+    char line[256] = "";
+    int lc =1;
+    int found_c =0;
+    int found[50];
+    char * ret;
+    //printf("dosya adı : %s\n",file_name);
+    while (fgets(line, sizeof(line), file)) {
+        ret = strstr(line, search_w);
+        if(ret){
+            //printf("%d.satırda link olmayan ifade bulundu\n",lc);
+            found[found_c] = lc;
+            found_c +=1;
+        }
+        lc +=1;
+    }
+    if (found_c == 0){
+        //printf("bu dosyada ifade bulunamadı\n");
+        }
+    else{
+        printf("\n%s dosyasında \n",file_name);
+        for(int i=0; i<found_c;i+=1){
+        printf("%d.satırda ifade bulundu\n",found[i]);
+        }
+    }
+    fclose(file);
+}
+
+void new_file(char file_name[100], char path[100]){
+    char t_file_name[205];
+    strcpy(t_file_name, path);
+    strcat(t_file_name, file_name);
+    strcat(t_file_name, ".txt");
+    change_space(t_file_name);
+    FILE* file = fopen(t_file_name, "a"); /* should check the result */
+    fprintf(file,"Dersin Kodu  : BLM%d\n",200);
+    fprintf(file,"Dersin Adı  : [[%s]]\n",file_name);
+    fprintf(file,"Dersin İçeriği:\n");
+    fclose(file);
+}
+
+
+
 //----main
 
 int main(){
@@ -330,7 +377,7 @@ int main(){
     //folderları bulur
     int folder_count = 0;
     char folders[50][100];
-    char path[100] = "../";
+    char path[100] = "../Üniversite/";
     char files[50][200];
     char file_names[50][100];
     int file_count = 0;
@@ -350,6 +397,8 @@ int main(){
         //her bir link için
         link_struct[k].orphan = 1;
         for(int i =0;i<file_count;i++){
+            //boşlukla_rı yok et
+            change_space(file_names[i]);
             if (!strcmp(link_struct[k].name,file_names[i])){
                 printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
                 link_struct[k].orphan = 0;
@@ -384,12 +433,13 @@ int main(){
     int run = 1;
     while (run){
         printf("Yapacağınız işlemle eşleştirilimiş harf kodunu seçiniz\n");
-        printf("-----------------------------\n");
-        printf("||-|| Arama Yap         :  1 |\n");
-        printf("||-|| Etiketi Güncelle  :  2 |\n");
-        printf("||-|| Dosyaya Yaz       :  3 |\n");
-        printf("||-|| Çıkış             :  4 |\n");
-        printf("-----------------------------\n\n");
+        printf("------------------------------------\n");
+        printf("||-|| Arama Yap                :  1 |\n");
+        printf("||-|| Etiketin adını Güncelle  :  2 |\n");
+        printf("||-|| Dosyaya Yaz              :  3 |\n");
+        printf("||-|| Yetim etikete dosya aç   :  4 |\n");
+        printf("||-|| Çıkış                    :  5 |\n");
+        printf("------------------------------------\n\n");
         int inp;
         char ln;
         printf("||-|| ");
@@ -401,18 +451,23 @@ int main(){
             printf("Arama Yapılıyor..\n");
             printf("Arama Yapmak istediğiniz Kelimeyi giriniz : ");
             char search_w[100];
-            fscanf(stdin,"%s",search_w);
+            fgets(search_w,100,stdin);
+            search_w[strcspn(search_w, "\n")] = '\0';
             printf("girilen : %s\n",search_w);
+            //dosyada str ara
+            char str_l[50][100];
+            printf("dos say : %d\n",file_count);
+            for(int i=0; i<file_count ;i+=1){
+                filestr(files[i], search_w, str_l);
+            }
             //linkler arasında ara
             for(int i=0; i<link_count ;i += 1){
                 if(!strcmp(search_w,link_struct[i].name)){
                     printf("Bulundu ! ;\n");
+                    printf("Bu bir link\n");
                     print_struct(link_struct,i);
                 }
-            //str str ile dosya içerisinde kelime ara
-
             }
-
         }
          else if (inp == 2){
             printf("||-|| Etiket Güncelleme işlemi..\n");
@@ -447,7 +502,7 @@ int main(){
                     //link struct adını değiştir
                     set_name(&link_struct[ind_l[i]], new_link_name);
                     //dosyada yazanı değiştir
-                    printf("döndü %s \n",link_struct[ind_l[i]].file);
+                    //printf("döndü %s \n",link_struct[ind_l[i]].file);
                     change_index(link_struct[ind_l[i]].file,link_struct[ind_l[i]].start_i,link_struct[ind_l[i]].stop_i,new_link_name);
                     //link yetim değil ise dosya adını değiştir 
                     if(link_struct[ind_l[i]].orphan != 1){
@@ -466,16 +521,59 @@ int main(){
                         printf("yeni file ismi :%s\n",new_file_name);
                         }
                     }
-                }
+            }
             else{
                 printf("listede yok !\n");
                 }
         }
-        else if (inp == 3){
+        else if(inp == 3){
             printf("||-|| Dosyaya Yazılıyor..\n");
             fprint_out(link_struct, &link_count);
         }
-        else if (inp == 4){
+        else if(inp == 4){
+            //yetim etiket listele
+            for(int i =0;i < link_count;i+=1){
+                if(link_struct[i].orphan){
+                    print_struct(link_struct, i);
+                }
+             }
+            //seçim al
+            printf("dosya açmak istediğininz etiketi seçiniz : ");
+            char new_file_name[100];
+            char path[100] = "";
+            strcpy(path, "../Üniversite/Dersler/");
+            //eğer yetim etiket düzgün seçildiyse
+            //seçimin düzgünlüğünü tutan değişken
+            int ch =0;
+            fgets(new_file_name,100,stdin);
+            new_file_name[strcspn(new_file_name, "\n")] = '\0';
+            for(int i =0;i < link_count;i+=1){
+                if(link_struct[i].orphan){
+                    if(!strcmp(link_struct[i].name, new_file_name)){
+                        ch = 1;
+                    }
+                }
+             }
+            if(ch){
+                new_file(new_file_name,path);
+                printf("dosya açıldı \n\n");
+            }
+            else{
+            printf("\n||-||hatalı etiket adı girdiniz lütfen geçerli giriş yapınız\n");
+            }
+            //yetim listesinden kaldır
+            for(int i =0;i < link_count;i+=1){
+                if(link_struct[i].orphan){
+                    if(!strcmp(link_struct[i].name, new_file_name)){
+                        link_struct[i].orphan = 0;
+                    }
+                }
+             }
+            //dersler pathına yeni dosya aç
+            //dosya içeriğini dolfur
+            //done!
+            }
+        else if (inp == 5){
             printf("||-|| çıkılıyor ..\n");
             break;
         }
@@ -484,6 +582,5 @@ int main(){
             break;
         }
     }
-
     return 0;
 }

@@ -1,37 +1,34 @@
-Etiket Listesi- Tekrar Sayısı
-Programlama_III 		-		 2
-Emre Kaya                                                              	-	 5
-Ahmet SAYAR                                                            	-	 2
-Hikmet Hakan GÜREL                                                    	-	 2
-Görsel Programlama                                                    	-	 3
-deneme                                                                 	-	 1
-                                                                       	-	 2
-Ahmet SAYAR                                                            	-	 2
-Hikmet Hakan GÜREL                                                    	-	 2
-                                                                       	-	 2
-Programlama I                                                          	-	 1
+Etiket Listesi                                            -  Tekrar Sayısı
+Ahmet ERDİL                                                           	-	 6
+Programlama I                                                          	-	 2
+Emre KAYA                                                              	-	 2
+Hikmet Hakan GÜREL                                                    	-	 3
+Görsel Programlama                                                    	-	 2
+Programlama I                                                          	-	 2
+Emre KAYA                                                              	-	 2
+Alev MUTLU                                                             	-	 1
+ProgramlamaLab                                                         	-	 2
+Matematik_I                                                            	-	 1
+Programlama_I                                                          	-	 2
 Matematik_II                                                           	-	 1
 Programlama_II                                                         	-	 1
 Nesneye Yönelik Programlama                                           	-	 1
+Görsel Programlama                                                    	-	 2
 VeritabanıYönetimi                                                   	-	 1
-ProgramlamaLab                                                         	-	 1
-Programlama_I                                                          	-	 1
+ProgramlamaLab                                                         	-	 2
+Programlama_I                                                          	-	 2
 
 
 Yetim Etiketler :
 
 
-Emre Kaya
-Ahmet SAYAR
+Programlama I
+Emre KAYA
 Hikmet Hakan GÜREL
 Görsel Programlama
-
-Ahmet SAYAR
-Hikmet Hakan GÜREL
-
 Programlama I
-Matematik_II
+Emre KAYA
+Alev MUTLU
 Nesneye Yönelik Programlama
+Görsel Programlama
 VeritabanıYönetimi
-ProgramlamaLab
-Programlama_I
