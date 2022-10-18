@@ -154,10 +154,26 @@ int is_txt(char *file_name){
 }
 
 int max_blm_num(char files[50][200],int file_count){
-    for(int i =0;i<file_count;i+=!){
-
-}
-
+    printf("here %d\n",file_count);
+    int number = 200;
+    char * ret;
+    char line[500];
+    for(int i =0;i<file_count;i+=1){
+        printf("files : %s\n",files[i]);
+        FILE *file = fopen(files[i], "r");
+        while (fgets(line, sizeof(line), file)) {
+            ret = strstr(line, "BLM");
+            if(ret){
+                ret += 3;
+                number = atoi(ret);
+                printf("%d",number);
+                if(number >= 200){
+                    return number+1;
+                }
+            }
+        }
+    }
+    return number;
 }
 
 void find_f(char* path,char folders[50][100],char files[50][200] ,char file_names[50][100] , int *folder_count, int *file_count){
@@ -353,14 +369,14 @@ void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
     fclose(file);
 }
 
-void new_file(char file_name[100], char path[100]){
+void new_file(char file_name[100], char path[100], int number){
     char t_file_name[205];
     strcpy(t_file_name, path);
     strcat(t_file_name, file_name);
     strcat(t_file_name, ".txt");
     change_space(t_file_name);
-    FILE* file = fopen(t_file_name, "a"); /* should check the result */
-    fprintf(file,"Dersin Kodu  : BLM%d\n",200);
+    FILE* file = fopen(t_file_name, "w");
+    fprintf(file,"Dersin Kodu  : BLM%d\n",number);
     fprintf(file,"Dersin Adı  : [[%s]]\n",file_name);
     fprintf(file,"Dersin İçeriği:\n");
     fclose(file);
@@ -398,8 +414,11 @@ int main(){
         link_struct[k].orphan = 1;
         for(int i =0;i<file_count;i++){
             //boşlukla_rı yok et
+            char tmp_link_name[100];
+            strcpy(tmp_link_name, link_struct[k].name);
+            change_space(tmp_link_name);
             change_space(file_names[i]);
-            if (!strcmp(link_struct[k].name,file_names[i])){
+            if (!strcmp(tmp_link_name,file_names[i])){
                 printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
                 link_struct[k].orphan = 0;
                 set_linked_file(&link_struct[k], files[i]);
@@ -448,7 +467,6 @@ int main(){
         printf("girilenn :%d\n",inp);
 
         if (inp == 1){
-            printf("Arama Yapılıyor..\n");
             printf("Arama Yapmak istediğiniz Kelimeyi giriniz : ");
             char search_w[100];
             fgets(search_w,100,stdin);
@@ -532,11 +550,21 @@ int main(){
         }
         else if(inp == 4){
             //yetim etiket listele
-            for(int i =0;i < link_count;i+=1){
-                if(link_struct[i].orphan){
-                    print_struct(link_struct, i);
+            char writed[50][100];
+            for(int i = 0; i < link_count;i+=1){
+                for(int k =0; k < link_count;k+=1){
+                    if(!strcmp(writed[k],link_struct[i].name)){
+                        break;
+                        }
+                    else if(k == link_struct[i].count){
+                        if(link_struct[i].orphan){
+                            print_struct(link_struct, i);
+                        }
+                        strcpy(writed[k],link_struct[i].name);
+                    }
                 }
-             }
+            }
+
             //seçim al
             printf("dosya açmak istediğininz etiketi seçiniz : ");
             char new_file_name[100];
@@ -555,7 +583,9 @@ int main(){
                 }
              }
             if(ch){
-                new_file(new_file_name,path);
+                int number;
+                number = max_blm_num(files, file_count);
+                new_file(new_file_name,path,number);
                 printf("dosya açıldı \n\n");
             }
             else{
