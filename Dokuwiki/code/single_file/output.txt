@@ -1,20 +1,20 @@
 Etiket Listesi                                            -  Tekrar Sayısı
+VeritabanıYönetimi                                                   	-	 2
 Ahmet ERDİL                                                           	-	 6
 Programlama I                                                          	-	 2
+Alev MUTLU                                                             	-	 2
 Emre KAYA                                                              	-	 2
 Hikmet Hakan GÜREL                                                    	-	 3
-Görsel Programlama                                                    	-	 2
+Görsel Programlama                                                    	-	 4
 Programlama I                                                          	-	 2
 Emre KAYA                                                              	-	 2
-Alev MUTLU                                                             	-	 1
+Alev MUTLU                                                             	-	 2
 ProgramlamaLab                                                         	-	 2
 Matematik_I                                                            	-	 1
 Programlama_I                                                          	-	 2
 Matematik_II                                                           	-	 1
 Programlama_II                                                         	-	 1
 Nesneye Yönelik Programlama                                           	-	 1
-Görsel Programlama                                                    	-	 2
-VeritabanıYönetimi                                                   	-	 1
 ProgramlamaLab                                                         	-	 2
 Programlama_I                                                          	-	 2
 
@@ -22,13 +22,8 @@ Programlama_I                                                          	-	 2
 Yetim Etiketler :
 
 
-Programlama I
+Ahmet ERDİL
 Emre KAYA
 Hikmet Hakan GÜREL
-Görsel Programlama
-Programlama I
 Emre KAYA
-Alev MUTLU
 Nesneye Yönelik Programlama
-Görsel Programlama
-VeritabanıYönetimi

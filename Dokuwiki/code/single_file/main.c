@@ -18,7 +18,8 @@ struct link{
     int count;
     };
 
-
+// struct a ekleme yapmak için kullanılar fonksiyonlar
+// ---------
 void set_linked_file(struct link *r_link,char linked_f[100]){
     strcpy(r_link->linked_f, linked_f);
     }
@@ -43,8 +44,9 @@ void set_ind(struct link *r_link, int start_i, int stop_i){
 void set_ent(struct link *r_link, int enter_c){
     (*r_link).ent_c = enter_c;
     }
+//--------
 
-
+//tüm bir dosya yolu alıp ondan dosya adını çıkartan fonksiyon
 void f_to_path(char *file, char path[100]){
     int k = 0;
     strcpy(path,file);
@@ -57,7 +59,8 @@ void f_to_path(char *file, char path[100]){
 }
 
 //---------------------read file-----------
-
+// verilen dosyayı okuyup içerisindeki linkleri ayıkıyan
+// ayıklanan linklere isim yol gibi base değişkenleri atayan fonksiyon
 void read_file(char *file_name, struct link link_struct[50],int *link_count){
     //printf("%s\n",file_name);
     FILE *file = fopen(file_name, "r");
@@ -138,13 +141,14 @@ void read_file(char *file_name, struct link link_struct[50],int *link_count){
 	fclose(file);
     }
 
+//verilen dosya adındaki .txt uzantısını silen fonksiyon
 void del_txt(char *file_name){
     int k = 0;
     k = strlen(file_name) - 4;
     file_name[k] = '\0';
     printf("txt : %s\n",file_name);
 }
-
+//verilen dosyanın uzantısını .txt mi olduğunu sorgulayan fonksiyon
 int is_txt(char *file_name){
     int len = strlen(file_name);
     const char *extent = &file_name[len-4];
@@ -152,11 +156,14 @@ int is_txt(char *file_name){
         return 1;
     return 0;
 }
-
+//verilen dosyai listesindeki dosyaların hepsinin içerisindeki
+//ders kodlarını okuyup en büyüğünü döndüren fonksiyon
 int max_blm_num(char files[50][200],int file_count){
     printf("here %d\n",file_count);
-    int number = 200;
+    int number = 0;
     char * ret;
+    int numbers[50];
+    int counter =0;
     char line[500];
     for(int i =0;i<file_count;i+=1){
         printf("files : %s\n",files[i]);
@@ -167,13 +174,19 @@ int max_blm_num(char files[50][200],int file_count){
                 ret += 3;
                 number = atoi(ret);
                 printf("verilen : %d",number);
-                if(number >= 200){
-                    return number+1;
-                }
+                numbers[counter] = number;
+                counter += 1;
             }
         }
     }
-    return number;
+    int max =199;
+    for(int i=0;i<counter;i+=1){
+        printf("%d\n",numbers[i]);
+        if(numbers[i]>max){
+            max = numbers[i];
+        }
+    }
+    return max+1;
 }
 
 void find_f(char* path,char folders[50][100],char files[50][200] ,char file_names[50][100] , int *folder_count, int *file_count){
@@ -588,7 +601,13 @@ int main(){
              }
             if(ch){
                 int number;
+                char f_p[100] = "../Üniversite/";
+                file_count = 0;
+                folder_count =0;
+                find_f(f_p ,folders ,files ,file_names ,&folder_count ,&file_count);
+                //dosyaların tekrar güncellenmesi(her dosyadaki max ders no sunu bulmak için gerekli)
                 number = max_blm_num(files, file_count);
+                printf("number : %d",number);
                 new_file(new_file_name,path,number);
                 printf("dosya açıldı \n\n");
             }
