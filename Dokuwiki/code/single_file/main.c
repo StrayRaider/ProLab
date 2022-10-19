@@ -159,7 +159,6 @@ int is_txt(char *file_name){
 //verilen dosyai listesindeki dosyaların hepsinin içerisindeki
 //ders kodlarını okuyup en büyüğünü döndüren fonksiyon
 int max_blm_num(char files[50][200],int file_count){
-    printf("here %d\n",file_count);
     int number = 0;
     char * ret;
     int numbers[50];
@@ -188,7 +187,11 @@ int max_blm_num(char files[50][200],int file_count){
     }
     return max+1;
 }
-
+// verilan ana dosya yolunun altında bulunan tüm dizin ve dosyaları okuyan,
+// dosyaları files a 
+// dizinleri folders a
+// dosya isimlerini etiket kontrolü için file_names e atar
+// sayaçlar için dışarıdan dosya ve dizin sayısını tutan pointer değişkenler alır
 void find_f(char* path,char folders[50][100],char files[50][200] ,char file_names[50][100] , int *folder_count, int *file_count){
     DIR *dir;
     struct dirent *dent;
@@ -235,7 +238,11 @@ void find_f(char* path,char folders[50][100],char files[50][200] ,char file_name
      }
 }
 //-------------------------
-
+//verilen dosyadaki verilen link ifadesinin başlangıç ve bitiş indexlerine göre
+//verilen yeni cümlenin link olarak dosyaya yazılmasını sağlar
+//çalışma şekli : dosyanın link başlangıcına kadar olan kısmı değişmeyeceğinden tümünü geçici bi dosya olan
+//tmp dosyasına atar ardından istenilen cümleyi tmp ye ekler son olarak bitiş indexinden sonraki kısmı ekler
+//ve tüm tmp dosyasını eski dosya adına geri yazar böylece dosya içeriği değiştirilmiş olur
 void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
     //dosyayı aç
     FILE *file = fopen(file_name, "r+");
@@ -273,7 +280,7 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
     fclose(last_file);
     fclose(r_tmp);
     }
-
+//linklerin tümünü ekrana düzenli biçimde tekrar sayılarıyla birlikye basar
 void print_links(struct link link_struct[50], int *link_count){
     char writed[50][100];
     printf("Etiket Listesi                                          -   Tekrar Sayısı\n");
@@ -291,7 +298,7 @@ void print_links(struct link link_struct[50], int *link_count){
             }
         }
     }
-
+//tüm linkleri sitenilen formatta output.txt dosyasına yazar
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
@@ -325,7 +332,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
 
     fclose(file);
     }
-
+// link struct verisinin içeriğinden istenilenleri ekrana basar
 void print_struct(struct link *link_struct,int k){
     printf("Link adı             : %s\n", link_struct[k].name);
 	//printf("path               : %s\n", link_struct[k].path);
@@ -344,7 +351,7 @@ void print_struct(struct link *link_struct,int k){
     printf("\n");
 
 }
-
+//dosya ismindeki ' ' karakterini '_' ile yer değiştirir
 void change_space(char file_name[100]){
     for(int i=0;i < strlen(file_name);i++){
         if(file_name[i] == ' '){
@@ -352,7 +359,7 @@ void change_space(char file_name[100]){
         }
     }
 }
-
+//dosya içerisinde istenilen string argümanını arar ve kaçıncı satırda olduğuğnu ekrana basar
 void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
     FILE* file = fopen(file_name, "r"); /* should check the result */
     char line[256] = "";
@@ -381,7 +388,7 @@ void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
     }
     fclose(file);
 }
-
+//yetim etiketler için verilen yolda ve isimde yeni dosya oluşturur
 void new_file(char file_name[100], char path[100], int number){
     char t_file_name[205];
     strcpy(t_file_name, path);
@@ -398,7 +405,8 @@ void new_file(char file_name[100], char path[100], int number){
 
 
 //----main
-
+//yazılan tüm fonksiyonların düzenli biçimde çalışmasını sağlayan
+//arayüz ü içerisinde barındıran fonksiyon
 int main(){
     setlocale(LC_ALL,"Turkish");
     struct link link_struct[50];
@@ -421,7 +429,6 @@ int main(){
         read_file(files[i],link_struct,&link_count);
     }
     //yetim mi sorgusu
-    // struct atamaları
     for(int k = 0;k<link_count;k++){
         //her bir link için
         link_struct[k].orphan = 1;
