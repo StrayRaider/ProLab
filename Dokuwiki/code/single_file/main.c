@@ -172,7 +172,6 @@ int max_blm_num(char files[50][200],int file_count){
             if(ret){
                 ret += 3;
                 number = atoi(ret);
-                printf("verilen : %d",number);
                 numbers[counter] = number;
                 counter += 1;
             }
@@ -180,7 +179,6 @@ int max_blm_num(char files[50][200],int file_count){
     }
     int max =199;
     for(int i=0;i<counter;i+=1){
-        printf("%d\n",numbers[i]);
         if(numbers[i]>max){
             max = numbers[i];
         }
@@ -303,8 +301,8 @@ void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
     FILE *file = fopen("output.txt", "w");
-    fprintf(file,"Etiket Listesi                                                          - Tekrar Sayısı\n");
-    fprintf(file,"%-70s \t-\t    %d\n",link_struct[0].name,link_struct[0].count);
+    fprintf(file,"Etiket Listesi                                            -  Tekrar Sayısı\n");
+    fprintf(file,"%-70s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     int orp_c = 0;
     //printf("lc : %d",*link_count);
@@ -319,7 +317,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
-                fprintf(file,"%-70s \t-\t    %d\n",link_struct[i].name,link_struct[i].count);
+                fprintf(file,"%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[k],link_struct[i].name);
                 }
             }
@@ -360,7 +358,7 @@ void change_space(char file_name[100]){
     }
 }
 //dosya içerisinde istenilen string argümanını arar ve kaçıncı satırda olduğuğnu ekrana basar
-void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
+void filestr(char file_name[100], char search_w[100], int *is_f){
     FILE* file = fopen(file_name, "r"); /* should check the result */
     char line[256] = "";
     int lc =1;
@@ -381,6 +379,7 @@ void filestr(char file_name[100], char search_w[100], char search_l[50][100]){
         //printf("bu dosyada ifade bulunamadı\n");
         }
     else{
+        *is_f = 1;
         printf("\n%s dosyasında \n",file_name);
         for(int i=0; i<found_c;i+=1){
         printf("%d.satırda ifade bulundu\n",found[i]);
@@ -484,7 +483,7 @@ int main(){
         printf("||-|| ");
         scanf("%d",&inp);
         scanf("%c",&ln);
-        printf("girilen :%d\n",inp);
+        //printf("girilen :%d\n",inp);
 
         if (inp == 1){
             system("clear");
@@ -492,12 +491,13 @@ int main(){
             char search_w[100];
             fgets(search_w,100,stdin);
             search_w[strcspn(search_w, "\n")] = '\0';
-            printf("girilen : %s\n",search_w);
+            //printf("girilen : %s\n",search_w);
             //dosyada str ara
             char str_l[50][100];
-            printf("txt formatındaki dosya sayısı: %d\n",file_count);
+            //printf("txt formatındaki dosya sayısı: %d\n",file_count);
+            int is_f =0;
             for(int i=0; i<file_count ;i+=1){
-                filestr(files[i], search_w, str_l);
+                filestr(files[i], search_w, &is_f);
             }
             //linkler arasında ara
             for(int i=0; i<link_count ;i += 1){
@@ -505,8 +505,11 @@ int main(){
                     printf("Bulundu ! ;\n");
                     printf("Bu bir link\n");
                     print_struct(link_struct,i);
+                    is_f = 1;
                 }
             }
+            if(!is_f)
+                printf("ardığınız kelime bulunamadı!\n");
         }
          else if (inp == 2){
             system("clear");            
