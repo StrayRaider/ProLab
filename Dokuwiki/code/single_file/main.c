@@ -166,7 +166,7 @@ int max_blm_num(char files[50][200],int file_count){
             if(ret){
                 ret += 3;
                 number = atoi(ret);
-                printf("%d",number);
+                printf("verilen : %d",number);
                 if(number >= 200){
                     return number+1;
                 }
