@@ -303,8 +303,8 @@ void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
     FILE *file = fopen("output.txt", "w");
-    fprintf(file,"Etiket Listesi                                            -  Tekrar Sayısı\n");
-    fprintf(file,"%-70s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
+    fprintf(file,"Etiket Listesi                                                          - Tekrar Sayısı\n");
+    fprintf(file,"%-70s \t-\t    %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     int orp_c = 0;
     //printf("lc : %d",*link_count);
@@ -319,7 +319,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
-                fprintf(file,"%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
+                fprintf(file,"%-70s \t-\t    %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[k],link_struct[i].name);
                 }
             }
