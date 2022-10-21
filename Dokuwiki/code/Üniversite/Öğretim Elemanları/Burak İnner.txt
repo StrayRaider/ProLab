@@ -1,3 +1,3 @@
 Unvan     : Dr. Öğr. Üyesi
-Dersler   : [[ProLab]], [[ProLab]]
+Dersler   : [[ProgramlamaLab]], [[Programlama_I]]
 İletişim  : 02623033560

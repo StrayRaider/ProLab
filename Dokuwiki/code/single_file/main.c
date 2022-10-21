@@ -15,6 +15,7 @@ struct link{
     int stop_i;
     int ent_c;
     int orphan; //yetim mi sorgusu
+    int is_wanted;
     int count;
     };
 
@@ -43,6 +44,9 @@ void set_ind(struct link *r_link, int start_i, int stop_i){
 
 void set_ent(struct link *r_link, int enter_c){
     (*r_link).ent_c = enter_c;
+    }
+void set_want(struct link *r_link, int want){
+    (*r_link).is_wanted = want;
     }
 //--------
 
@@ -338,6 +342,7 @@ void print_struct(struct link *link_struct,int k){
 	//printf("start_i            : %d\n", link_struct[k].start_i);
     //printf("stop_i             : %d\n", link_struct[k].stop_i);
     //printf("ent_c              : %d\n", link_struct[k].ent_c);
+    //printf("link adet sayısı   : %d\n", link_struct[k].count);
     if(link_struct[k].orphan == 1){
         printf("yetim mi             : evet\n");
     }
@@ -345,7 +350,9 @@ void print_struct(struct link *link_struct,int k){
         printf("yetim mi             :yetim olmayan etiket \n");
 	    printf("bağladığı dosya      : %s\n", link_struct[k].linked_f);
     }
-    printf("link adet sayısı     : %d\n", link_struct[k].count);
+    if(link_struct[k].is_wanted == 1){
+        printf("istenen mi           : istenen etiket\n");
+    }
     printf("\n");
 
 }
@@ -401,7 +408,64 @@ void new_file(char file_name[100], char path[100], int number){
     fclose(file);
 }
 
+void print_orp(struct link link_struct[50] ,int link_count){
+    char writed[50][100];
+    for(int i = 0; i < link_count;i+=1){
+        for(int k =0; k < link_count;k+=1){
+            if(!strcmp(writed[k],link_struct[i].name)){
+                break;
+                }
+            else if(k == link_struct[i].count){
+                if(link_struct[i].orphan){
+                    print_struct(link_struct, i);
+                    }
+                strcpy(writed[k],link_struct[i].name);
+            }
+        }
+   }
+}
 
+void print_wanted(struct link link_struct[50] ,int link_count){
+    char writed[50][100];
+    for(int i = 0; i < link_count;i+=1){
+        for(int k =0; k < link_count;k+=1){
+            if(!strcmp(writed[k],link_struct[i].name)){
+                break;
+                }
+            else if(k == link_struct[i].count){
+                if(link_struct[i].is_wanted){
+                    print_struct(link_struct, i);
+                    }
+                strcpy(writed[k],link_struct[i].name);
+            }
+        }
+   }
+}
+
+
+
+
+void is_wanted(struct link *link_struct, int *link_count, char file_names[50][100], int file_count){
+    //her bir dosya adı için
+    //kaç kez link eklendiğini tutar listeye eklemek için gerekli
+    int counter =0;
+    for(int i =0;i<file_count;i+=1){
+        //dosya adında link bulunma durumunu tutar
+        int is_f =0;
+        //her bir linke bak
+        for(int k=0; k<*link_count;k+=1){
+            //eğer dosya adında bir link var ise
+            if(!strcmp(link_struct[k].name,file_names[i]))
+                is_f = 1;
+        }
+        if(!is_f){
+        //bulunamadıysa istenen etikettir
+            *link_count +=1;
+            set_name(&link_struct[*link_count], file_names[i]);
+            link_struct[*link_count].is_wanted = 1;
+        }
+    }
+}
 
 //----main
 //yazılan tüm fonksiyonların düzenli biçimde çalışmasını sağlayan
@@ -463,6 +527,8 @@ int main(){
                 }
         print_struct(link_struct,k);
     }
+    //istenen etiket bulma fonksiyonu
+    is_wanted(link_struct, &link_count, file_names, file_count);
     system("clear");
     printf("Projeye Hoşgeldiniz \n");
     //Menüden kullanıcı arama yapabilmeli,
@@ -487,6 +553,8 @@ int main(){
 
         if (inp == 1){
             system("clear");
+            print_orp(link_struct, link_count);
+            print_wanted(link_struct, link_count);
             printf("Arama Yapmak istediğiniz Kelimeyi giriniz : ");
             char search_w[100];
             fgets(search_w,100,stdin);
@@ -499,17 +567,24 @@ int main(){
             for(int i=0; i<file_count ;i+=1){
                 filestr(files[i], search_w, &is_f);
             }
+            if(!is_f)
+                printf("ardığınız kelime olarak bulunamadı!\n");
             //linkler arasında ara
             for(int i=0; i<link_count ;i += 1){
                 if(!strcmp(search_w,link_struct[i].name)){
-                    printf("Bulundu ! ;\n");
+                    if(link_struct[i].is_wanted == 1){
+                    printf("istenen etiket olarak Bulundu ! ;\n");
+                    }
+                    else{
+                        printf("Bulundu ! ;\n");
+                    }
                     printf("Bu bir link\n");
                     print_struct(link_struct,i);
                     is_f = 1;
                 }
             }
             if(!is_f)
-                printf("ardığınız kelime bulunamadı!\n");
+                printf("ardığınız link olarak bulunamadı!\n");
         }
          else if (inp == 2){
             system("clear");            
@@ -576,22 +651,7 @@ int main(){
             printf("Dosyaya yazıldı.\n");
         }
         else if(inp == 4){
-            //yetim etiket listele
-            char writed[50][100];
-            for(int i = 0; i < link_count;i+=1){
-                for(int k =0; k < link_count;k+=1){
-                    if(!strcmp(writed[k],link_struct[i].name)){
-                        break;
-                        }
-                    else if(k == link_struct[i].count){
-                        if(link_struct[i].orphan){
-                            print_struct(link_struct, i);
-                        }
-                        strcpy(writed[k],link_struct[i].name);
-                    }
-                }
-            }
-
+            print_orp(link_struct, link_count);
             //seçim al
             printf("dosya açmak istediğininz etiketi seçiniz : ");
             char new_file_name[100];
