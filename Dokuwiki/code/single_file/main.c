@@ -289,6 +289,7 @@ void print_links(struct link link_struct[50], int *link_count){
     printf("%-50s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     for(int i = 0; i < *link_count;i+=1){
+        if(!link_struct[i].is_wanted){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 break;
@@ -296,6 +297,7 @@ void print_links(struct link link_struct[50], int *link_count){
             if(k == link_struct[i].count){
                 printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
                 strcpy(writed[k],link_struct[i].name);
+                    }
                 }
             }
         }
@@ -311,6 +313,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
     int orp_c = 0;
     //printf("lc : %d",*link_count);
     for(int i = 0; i < *link_count;i+=1){
+        if(!link_struct[i].is_wanted){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 //printf("burası : %d",i);
@@ -326,7 +329,7 @@ void fprint_out(struct link link_struct[50], int *link_count){
                 }
             }
         }
-    
+    }
     fprintf(file,"\n\nYetim Etiketler :\n\n\n");
     for(int o = 0; o < orp_c;o+=1){
         fprintf(file,"%s\n",orp_list[o]);
@@ -410,6 +413,7 @@ void new_file(char file_name[100], char path[100], int number){
 
 void print_orp(struct link link_struct[50] ,int link_count){
     char writed[50][100];
+    strcpy(writed[0], link_struct[0].name);
     for(int i = 0; i < link_count;i+=1){
         for(int k =0; k < link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
@@ -427,6 +431,7 @@ void print_orp(struct link link_struct[50] ,int link_count){
 
 void print_wanted(struct link link_struct[50] ,int link_count){
     char writed[50][100];
+    strcpy(writed[0], link_struct[0].name);
     for(int i = 0; i < link_count;i+=1){
         for(int k =0; k < link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
@@ -460,9 +465,9 @@ void is_wanted(struct link *link_struct, int *link_count, char file_names[50][10
         }
         if(!is_f){
         //bulunamadıysa istenen etikettir
-            *link_count +=1;
             set_name(&link_struct[*link_count], file_names[i]);
             link_struct[*link_count].is_wanted = 1;
+            *link_count +=1;
         }
     }
 }
@@ -499,8 +504,9 @@ int main(){
             //boşlukla_rı yok et
             char tmp_link_name[100];
             strcpy(tmp_link_name, link_struct[k].name);
-            change_space(tmp_link_name);
-            change_space(file_names[i]);
+            //forumda açılan konu sonucunda alınan cevap sebebiyle kapatıldılar
+            //change_space(tmp_link_name);
+            //change_space(file_names[i]);
             if (!strcmp(tmp_link_name,file_names[i])){
                 printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
                 link_struct[k].orphan = 0;
@@ -513,6 +519,7 @@ int main(){
                 set_linked_file(&link_struct[k], tmp);
                 }
         }
+        //kaç aded aynı isimde link olduğunu sayar
         int last_w = 0;
         int is_eq = 0;
         for(int l = 0;l<link_count;l++){
@@ -521,7 +528,7 @@ int main(){
                 }
             }
             //printf("%d here\n",is_eq);
-            link_struct[k].count = is_eq;
+            link_struct[k].count = is_eq+1;
             if(!is_eq){
                 last_w +=1;
                 }
@@ -629,7 +636,6 @@ int main(){
                         printf("dosya'ya a yazılan :%s\n",link_struct[ind_l[i]].name);
                         //dosya adını değiştir
                         char new_file_name[100];
-                        change_space(new_link_name);
                         char l_f_path[100];
                         f_to_path(link_struct[ind_l[i]].linked_f, l_f_path);
                         strcpy(new_file_name, l_f_path);
