@@ -288,17 +288,21 @@ void print_links(struct link link_struct[50], int *link_count){
     printf("Etiket Listesi                                          -   Tekrar Sayısı\n");
     printf("%-50s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
+    int w=0;
     for(int i = 0; i < *link_count;i+=1){
+        int is_same =0;
         if(!link_struct[i].is_wanted){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
+                is_same = 1;
                 break;
                 }
-            if(k == link_struct[i].count){
-                printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[k],link_struct[i].name);
-                    }
                 }
+            if(!is_same){
+                printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
+                strcpy(writed[w],link_struct[i].name);
+                w +=1;
+                    }
             }
         }
     }
@@ -311,23 +315,26 @@ void fprint_out(struct link link_struct[50], int *link_count){
     fprintf(file,"%-70s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
     int orp_c = 0;
+    int w = 1;
     //printf("lc : %d",*link_count);
     for(int i = 0; i < *link_count;i+=1){
+        int is_same =0;
         if(!link_struct[i].is_wanted){
         for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
-                //printf("burası : %d",i);
+                is_same = 1;
                 break;
                 }
-            else if(k == link_struct[i].count){
+            }
+            if(!is_same){
                 if(link_struct[i].orphan == 1){
                     strcpy(orp_list[orp_c],link_struct[i].name);
                     orp_c += 1;
                     }
                 fprintf(file,"%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[k],link_struct[i].name);
+                strcpy(writed[w],link_struct[i].name);
+                w +=1;
                 }
-            }
         }
     }
     fprintf(file,"\n\nYetim Etiketler :\n\n\n");
@@ -414,17 +421,21 @@ void new_file(char file_name[100], char path[100], int number){
 void print_orp(struct link link_struct[50] ,int link_count){
     char writed[50][100];
     strcpy(writed[0], link_struct[0].name);
+    int w =0;
     for(int i = 0; i < link_count;i+=1){
+        int is_same =0;
         for(int k =0; k < link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
+                is_same = 1;
                 break;
                 }
-            else if(k == link_struct[i].count){
-                if(link_struct[i].orphan){
-                    print_struct(link_struct, i);
-                    }
-                strcpy(writed[k],link_struct[i].name);
-            }
+        }
+        if(!is_same){
+            if(link_struct[i].orphan){
+                print_struct(link_struct, i);
+                }
+            strcpy(writed[w],link_struct[i].name);
+            w+=1;
         }
    }
 }
@@ -437,12 +448,15 @@ void print_wanted(struct link link_struct[50] ,int link_count){
             if(!strcmp(writed[k],link_struct[i].name)){
                 break;
                 }
-            else if(k == link_struct[i].count){
-                if(link_struct[i].is_wanted){
-                    print_struct(link_struct, i);
-                    }
-                strcpy(writed[k],link_struct[i].name);
-            }
+        }
+        if(k == link_struct[i].count){
+            if(link_struct[i].is_wanted){
+                //print_struct(link_struct, i);
+                printf("Link adı             : %s\n", link_struct[k].name);
+                printf("istenen mi           : istenen etiket\n");
+                printf("\n");
+                }
+            strcpy(writed[k],link_struct[i].name);
         }
    }
 }
@@ -528,7 +542,7 @@ int main(){
                 }
             }
             //printf("%d here\n",is_eq);
-            link_struct[k].count = is_eq+1;
+            link_struct[k].count = is_eq;
             if(!is_eq){
                 last_w +=1;
                 }
