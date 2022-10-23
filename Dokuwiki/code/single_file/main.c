@@ -559,7 +559,7 @@ int main(){
     //folderları bulur
     int folder_count = 0;
     char folders[50][100];
-    char path[100] = "../Üniversite/";
+    char path[100] = "./Üniversite/";
     char files[50][200];
     char file_names[50][100];
     int file_count = 0;
@@ -709,7 +709,7 @@ int main(){
             printf("dosya açmak istediğininz etiketi seçiniz : ");
             char new_file_name[100];
             char path[100] = "";
-            strcpy(path, "../Üniversite/Dersler/");
+            strcpy(path, "./Üniversite/Dersler/");
             //eğer yetim etiket düzgün seçildiyse
             //seçimin düzgünlüğünü tutan değişken
             int ch =0;
@@ -724,7 +724,7 @@ int main(){
              }
             if(ch){
                 int number;
-                char f_p[100] = "../Üniversite/";
+                char f_p[100] = "./Üniversite/";
                 file_count = 0;
                 folder_count =0;
                 find_f(f_p ,folders ,files ,file_names ,&folder_count ,&file_count);
