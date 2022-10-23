@@ -1,26 +1,27 @@
 Etiket Listesi                                            -  Tekrar Sayısı
-Ahmet ERDİL                                                           	-	 4
-Programlama I                                                          	-	 1
-Matematik I                                                            	-	 1
-Ahmet SAYAR                                                            	-	 1
-Hikmet Hakan GÜREL                                                    	-	 2
+Ahmet ERDİL                                                           	-	 6
+Programlama I                                                          	-	 2
+Ahmet SAYAR                                                            	-	 2
+Hikmet Hakan GÜREL                                                    	-	 3
 Görsel Programlama                                                    	-	 2
-Matematik_I                                                            	-	 2
-ProgramlamaLab                                                         	-	 2
+Alev MUTLU                                                             	-	 1
+Matematik I                                                            	-	 1
+Matematik_I                                                            	-	 1
 Programlama_I                                                          	-	 2
 Matematik_II                                                           	-	 1
 Programlama_II                                                         	-	 1
 Nesneye Yönelik Programlama                                           	-	 1
 VeritabanıYönetimi                                                   	-	 1
+ProgramlamaLab                                                         	-	 1
 
 
 Yetim Etiketler :
 
 
-Programlama I
 Ahmet SAYAR
 Hikmet Hakan GÜREL
 Görsel Programlama
-Programlama_I
+Alev MUTLU
 Nesneye Yönelik Programlama
 VeritabanıYönetimi
+ProgramlamaLab

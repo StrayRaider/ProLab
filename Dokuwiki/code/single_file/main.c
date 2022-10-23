@@ -150,7 +150,7 @@ void del_txt(char *file_name){
     int k = 0;
     k = strlen(file_name) - 4;
     file_name[k] = '\0';
-    printf("txt : %s\n",file_name);
+    //printf("txt : %s\n",file_name);
 }
 //verilen dosyanın uzantısını .txt mi olduğunu sorgulayan fonksiyon
 int is_txt(char *file_name){
@@ -169,7 +169,7 @@ int max_blm_num(char files[50][200],int file_count){
     int counter =0;
     char line[500];
     for(int i =0;i<file_count;i+=1){
-        printf("files : %s\n",files[i]);
+        //printf("files : %s\n",files[i]);
         FILE *file = fopen(files[i], "r");
         while (fgets(line, sizeof(line), file)) {
             ret = strstr(line, "BLM");
@@ -219,11 +219,11 @@ void find_f(char* path,char folders[50][100],char files[50][200] ,char file_name
                 strcpy(f_path,path);
                 strcat(f_path,dent->d_name);
                 if(is_txt(file_name)){
-                    printf("path : %s\n",path);
-                    printf("yazılan fn: %s\n",file_name);
-                    printf("yazılan f: %s\n",f_path);
+                    //printf("path : %s\n",path);
+                    //printf("yazılan fn: %s\n",file_name);
+                    //printf("yazılan f: %s\n",f_path);
                     strcpy(files[*file_count],f_path);
-                    printf("path : %s\n",d_path);
+                    //printf("path : %s\n",d_path);
                     del_txt(file_name);
                     strcpy(file_names[*file_count], file_name);
                     *file_count+=1;
@@ -283,32 +283,44 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
     fclose(r_tmp);
     }
 //linklerin tümünü ekrana düzenli biçimde tekrar sayılarıyla birlikye basar
+
 void print_links(struct link link_struct[50], int *link_count){
     char writed[50][100];
     for(int i =0;i<50;i++)
         strcpy(writed[i]," ");
-    printf("Etiket Listesi                                          -   Tekrar Sayısı\n");
-    printf("%-50s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
+    char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
+    printf("Etiket Listesi                                            -  Tekrar Sayısı\n");
+    printf("%-70s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
-    int w=1;
+    int orp_c = 0;
+    int w = 1;
+    //printf("lc : %d",*link_count);
     for(int i = 0; i < *link_count;i+=1){
         int is_same =0;
         if(!link_struct[i].is_wanted){
-        int k =0;
-        for(k=0; k < *link_count;k+=1){
+        for(int k =0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 is_same = 1;
                 break;
                 }
-                }
-            if(!is_same){
-                printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[w],link_struct[k].name);
-                w +=1;
-                    }
             }
+            if(!is_same){
+                if(link_struct[i].orphan == 1){
+                    strcpy(orp_list[orp_c],link_struct[i].name);
+                    orp_c += 1;
+                    }
+                printf("%-70s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
+                strcpy(writed[w],link_struct[i].name);
+                w +=1;
+                }
         }
     }
+    printf("\n\nYetim Etiketler :\n\n\n");
+    for(int o = 0; o < orp_c;o+=1){
+        printf("%s\n",orp_list[o]);
+        }
+    }
+
 //tüm linkleri sitenilen formatta output.txt dosyasına yazar
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
@@ -357,7 +369,8 @@ void print_struct(struct link *link_struct,int k){
 	//printf("start_i            : %d\n", link_struct[k].start_i);
     //printf("stop_i             : %d\n", link_struct[k].stop_i);
     //printf("ent_c              : %d\n", link_struct[k].ent_c);
-    //printf("link adet sayısı   : %d\n", link_struct[k].count);
+    if(link_struct[k].count)
+        printf("etiket tekrar sayısı : %d\n", link_struct[k].count);
     if(link_struct[k].orphan == 1){
         printf("yetim mi             : evet\n");
     }
@@ -498,7 +511,44 @@ void is_wanted(struct link *link_struct, int *link_count, char file_names[50][10
         }
     }
 }
-
+void find_orp(struct link *link_struct,char file_names[50][100], char files[50][200],int file_count, int link_count){
+    for(int k = 0;k<link_count;k++){
+        //her bir link için
+        link_struct[k].orphan = 1;
+        for(int i =0;i<file_count;i++){
+            //boşlukla_rı yok et
+            char tmp_link_name[100];
+            strcpy(tmp_link_name, link_struct[k].name);
+            //forumda açılan konu sonucunda alınan cevap sebebiyle kapatıldılar
+            change_space(tmp_link_name);
+            //change_space(file_names[i]);
+            if (!strcmp(tmp_link_name,file_names[i])){
+                //printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
+                link_struct[k].orphan = 0;
+                set_linked_file(&link_struct[k], files[i]);
+                break;
+            //printf("str : %s\n",link_struct[k].name);
+                }
+            else{
+                char tmp[100] = " ";
+                set_linked_file(&link_struct[k], tmp);
+                }
+        }
+        //kaç aded aynı isimde link olduğunu sayar
+        int last_w = 0;
+        int is_eq = 0;
+        for(int l = 0;l<link_count;l++){
+            if(!strcmp(link_struct[l].name,link_struct[k].name)){
+                is_eq += 1;
+                }
+            }
+            //printf("%d here\n",is_eq);
+            link_struct[k].count = is_eq;
+            if(!is_eq){
+                last_w +=1;
+                }
+    }
+}
 //----main
 //yazılan tüm fonksiyonların düzenli biçimde çalışmasını sağlayan
 //arayüz ü içerisinde barındıran fonksiyon
@@ -524,43 +574,7 @@ int main(){
         read_file(files[i],link_struct,&link_count);
     }
     //yetim mi sorgusu
-    for(int k = 0;k<link_count;k++){
-        //her bir link için
-        link_struct[k].orphan = 1;
-        for(int i =0;i<file_count;i++){
-            //boşlukla_rı yok et
-            char tmp_link_name[100];
-            strcpy(tmp_link_name, link_struct[k].name);
-            //forumda açılan konu sonucunda alınan cevap sebebiyle kapatıldılar
-            change_space(tmp_link_name);
-            //change_space(file_names[i]);
-            if (!strcmp(tmp_link_name,file_names[i])){
-                printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
-                link_struct[k].orphan = 0;
-                set_linked_file(&link_struct[k], files[i]);
-                break;
-            //printf("str : %s\n",link_struct[k].name);
-                }
-            else{
-                char tmp[100] = " ";
-                set_linked_file(&link_struct[k], tmp);
-                }
-        }
-        //kaç aded aynı isimde link olduğunu sayar
-        int last_w = 0;
-        int is_eq = 0;
-        for(int l = 0;l<link_count;l++){
-            if(!strcmp(link_struct[l].name,link_struct[k].name)){
-                is_eq += 1;
-                }
-            }
-            //printf("%d here\n",is_eq);
-            link_struct[k].count = is_eq;
-            if(!is_eq){
-                last_w +=1;
-                }
-        print_struct(link_struct,k);
-    }
+    find_orp(link_struct, file_names, files, file_count, link_count);
     //istenen etiket bulma fonksiyonu
     is_wanted(link_struct, &link_count, file_names, file_count);
     system("clear");
@@ -626,7 +640,6 @@ int main(){
             printf("||-|| Etiket Güncelleme işlemi..\n");
             //etiket isimlerinin listelenmesi
             printf("Linklerin Listesi : \n");
-            printf("sayi : %d",link_count);
             print_links(link_struct,&link_count);
             printf("||-|| değiştirmek istediğiniz etiketin adını giriniz :");
             char search_w[100];
@@ -679,10 +692,13 @@ int main(){
             else{
                 printf("listede yok !\n");
                 }
+        find_orp(link_struct, file_names, files, file_count, link_count);
         }
         else if(inp == 3){
             system("clear");            
             printf("||-|| Dosyaya Yazılıyor..\n");
+            find_orp(link_struct, file_names, files, file_count, link_count);
+            print_links(link_struct,&link_count);
             fprint_out(link_struct, &link_count);
             printf("Dosyaya yazıldı.\n");
         }
@@ -713,9 +729,9 @@ int main(){
                 find_f(f_p ,folders ,files ,file_names ,&folder_count ,&file_count);
                 //dosyaların tekrar güncellenmesi(her dosyadaki max ders no sunu bulmak için gerekli)
                 number = max_blm_num(files, file_count);
-                printf("number : %d",number);
+                printf("%d ders numarası ile dosya açıldı\n",number);
                 new_file(new_file_name,path,number);
-                printf("dosya açıldı \n\n");
+                printf("dosya açıldı \n");
             }
             else{
             printf("\n||-||hatalı etiket adı girdiniz lütfen geçerli giriş yapınız\n");
@@ -728,9 +744,6 @@ int main(){
                     }
                 }
              }
-            //dersler pathına yeni dosya aç
-            //dosya içeriğini dolfur
-            //done!
             }
         else if (inp == 5){
             printf("||-|| çıkılıyor ..\n");
