@@ -450,7 +450,7 @@ void print_orp(struct link link_struct[50] ,int link_count){
                 break;
                 }
         }
-        if(!is_same){
+        if(!is_same && !link_struct[i].is_wanted){
             if(link_struct[i].orphan){
                 print_struct(link_struct, i);
                 }
@@ -703,6 +703,7 @@ int main(){
             printf("Dosyaya yazıldı.\n");
         }
         else if(inp == 4){
+            system("clear");            
             print_orp(link_struct, link_count);
             //seçim al
             printf("dosya açmak istediğininz etiketi seçiniz : ");
