@@ -285,14 +285,17 @@ void change_index(char* file_name,int start_i, int stop_i ,char *new_word){
 //linklerin tümünü ekrana düzenli biçimde tekrar sayılarıyla birlikye basar
 void print_links(struct link link_struct[50], int *link_count){
     char writed[50][100];
+    for(int i =0;i<50;i++)
+        strcpy(writed[i]," ");
     printf("Etiket Listesi                                          -   Tekrar Sayısı\n");
     printf("%-50s \t-\t %d\n",link_struct[0].name,link_struct[0].count);
     strcpy(writed[0],link_struct[0].name);
-    int w=0;
+    int w=1;
     for(int i = 0; i < *link_count;i+=1){
         int is_same =0;
         if(!link_struct[i].is_wanted){
-        for(int k =0; k < *link_count;k+=1){
+        int k =0;
+        for(k=0; k < *link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
                 is_same = 1;
                 break;
@@ -300,7 +303,7 @@ void print_links(struct link link_struct[50], int *link_count){
                 }
             if(!is_same){
                 printf("%-50s \t-\t %d\n",link_struct[i].name,link_struct[i].count);
-                strcpy(writed[w],link_struct[i].name);
+                strcpy(writed[w],link_struct[k].name);
                 w +=1;
                     }
             }
@@ -309,6 +312,8 @@ void print_links(struct link link_struct[50], int *link_count){
 //tüm linkleri sitenilen formatta output.txt dosyasına yazar
 void fprint_out(struct link link_struct[50], int *link_count){
     char writed[50][100];
+    for(int i =0;i<50;i++)
+        strcpy(writed[i]," ");
     char orp_list[50][100];//yazılacak yetim etiket isimlerini tutar
     FILE *file = fopen("output.txt", "w");
     fprintf(file,"Etiket Listesi                                            -  Tekrar Sayısı\n");
@@ -420,8 +425,10 @@ void new_file(char file_name[100], char path[100], int number){
 
 void print_orp(struct link link_struct[50] ,int link_count){
     char writed[50][100];
+    for(int i =0;i<50;i++)
+        strcpy(writed[i]," ");
     strcpy(writed[0], link_struct[0].name);
-    int w =0;
+    int w =1;
     for(int i = 0; i < link_count;i+=1){
         int is_same =0;
         for(int k =0; k < link_count;k+=1){
@@ -442,21 +449,27 @@ void print_orp(struct link link_struct[50] ,int link_count){
 
 void print_wanted(struct link link_struct[50] ,int link_count){
     char writed[50][100];
+    for(int i =0;i<50;i++)
+        strcpy(writed[i]," ");
     strcpy(writed[0], link_struct[0].name);
+    int w=1;
     for(int i = 0; i < link_count;i+=1){
+        int is_same =0;
         for(int k =0; k < link_count;k+=1){
             if(!strcmp(writed[k],link_struct[i].name)){
+                is_same = 1;
                 break;
                 }
         }
-        if(k == link_struct[i].count){
+        if(!is_same){
             if(link_struct[i].is_wanted){
                 //print_struct(link_struct, i);
-                printf("Link adı             : %s\n", link_struct[k].name);
+                printf("Link adı             : %s\n", link_struct[i].name);
                 printf("istenen mi           : istenen etiket\n");
                 printf("\n");
                 }
-            strcpy(writed[k],link_struct[i].name);
+            strcpy(writed[w],link_struct[i].name);
+            w+=1;
         }
    }
 }
@@ -519,7 +532,7 @@ int main(){
             char tmp_link_name[100];
             strcpy(tmp_link_name, link_struct[k].name);
             //forumda açılan konu sonucunda alınan cevap sebebiyle kapatıldılar
-            //change_space(tmp_link_name);
+            change_space(tmp_link_name);
             //change_space(file_names[i]);
             if (!strcmp(tmp_link_name,file_names[i])){
                 printf("\nFile_names i %s    %s\n\n",files[i],file_names[i]);
@@ -574,6 +587,7 @@ int main(){
 
         if (inp == 1){
             system("clear");
+            printf("arama :\n");
             print_orp(link_struct, link_count);
             print_wanted(link_struct, link_count);
             printf("Arama Yapmak istediğiniz Kelimeyi giriniz : ");
@@ -612,6 +626,7 @@ int main(){
             printf("||-|| Etiket Güncelleme işlemi..\n");
             //etiket isimlerinin listelenmesi
             printf("Linklerin Listesi : \n");
+            printf("sayi : %d",link_count);
             print_links(link_struct,&link_count);
             printf("||-|| değiştirmek istediğiniz etiketin adını giriniz :");
             char search_w[100];
@@ -653,6 +668,7 @@ int main(){
                         char l_f_path[100];
                         f_to_path(link_struct[ind_l[i]].linked_f, l_f_path);
                         strcpy(new_file_name, l_f_path);
+                        change_space(new_link_name);  
                         strcat(new_file_name, new_link_name);
                         strcat(new_file_name, ".txt");
                         rename(link_struct[ind_l[i]].linked_f,new_file_name);

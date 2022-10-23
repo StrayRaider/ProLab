@@ -1,10 +1,8 @@
-Dersin Kodu        : BLM109
+Dersin Kodu   : BLM108
 
-Dersin Adı         : Nesneye Yönelik Programlama
+Dersin Adı    : Matematik II
 
 Öğretim Elemanları : Prof. Dr. [[Ahmet ERDİL]]	erdil@kocaeli.edu.tr	02623033223
-                     Prof. Dr. [[ProLab]]	ahmet.sayar@kocaeli.edu.tr	02623033583
                      Prof. Dr. [[Hikmet Hakan GÜREL]]	hhakan.gurel@kocaeli.edu.tr	2623032215
-                     Dr. Öğr. Üyesi [[Alev MUTLU]	alev.mutlu@kocaeli.edu.tr	02623033577
-
-Dersin İçeriği     : Bu ders;nesneye yönelik problem çözme, sınıf, nesne kavramları, sınıf yapısı, kurucu ve yok ediciler, özel, korunmuş ve genel bölümler, sınıf içinde operatör ve fonksiyon isimlerinin yeniden yüklenmesi, türemiş sınıflar, sanal sınıflar, çok şekillilik,kalıtım ve uygulamaları kapsar. [[Görsel Programlama]] dersi ile destekli ilerlemektedir.
+                     
+Dersin İçeriği: 3 Boyutlu uzayda vektörler; Doğrular ve düzlemler; Koordinat sstemleri ve dönüşümleri; Vektör değerli fonksiyonlar, Çok değişkenli fonksiyonlar: Limit , Süreklilik, Kısmi Türev, Zincir Kuralı, Yönlü Türev, Diferansiyel; Maksimum-Minimum problemleri, Lagrange çarpanları; Çok katlı integraller ve uygulamaları; Eğrisel integraller ve yüzey integralleri. [[Matematik_I]] dersinin devamı niteliğindedir.
