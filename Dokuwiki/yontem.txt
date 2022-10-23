@@ -1,0 +1,10 @@
+
+
+
+Yetim etiket tespiti :
+Öncesinde anlatılan fonkisyonlardan dönüt olarak alınan Dosya isimleri listesi, 
+ve tüm dosyaların içerisinde gezilerek elde edilen link isimleri bir karşılaştırmaya sokulmadan önce link isimlerindeki boşluklar '_' karakterine çevrilir. ve karşılaştırmaya sokulur.
+karşılaştırma öncesi link in yetim olduğu var sayılır ve karşılaştırma sonucunde bir değişiklik olmazsa öylece kalır
+sonuç olarak her bir link için eşleşen herhangi bir dosya adı var ise o link yetim etiket değildir yok ise yetimdir
+sonuç olarak struct içerisindeki is_orphan değişkenine 0 veya 1 değeri atanır.
+

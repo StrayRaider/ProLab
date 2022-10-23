@@ -1,0 +1,26 @@
+Etiket Listesi                                            -  Tekrar Sayısı
+Ahmet ERDİL                                                           	-	 6
+Ahmet SAYAR                                                            	-	 2
+Hikmet Hakan GÜREL                                                    	-	 3
+Görsel Programlama                                                    	-	 2
+Programlama I                                                          	-	 2
+Alev MUTLU                                                             	-	 1
+Matematik I                                                            	-	 1
+ProgramlamaLab                                                         	-	 2
+Matematik_I                                                            	-	 1
+Programlama_I                                                          	-	 2
+Matematik_II                                                           	-	 1
+Pro_II                                                                 	-	 1
+Nesneye Yönelik Programlama                                           	-	 1
+VeritabanıYönetimi                                                   	-	 1
+
+
+Yetim Etiketler :
+
+
+Ahmet SAYAR
+Hikmet Hakan GÜREL
+Görsel Programlama
+Alev MUTLU
+Nesneye Yönelik Programlama
+VeritabanıYönetimi
