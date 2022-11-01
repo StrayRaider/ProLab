@@ -1,47 +1,121 @@
 //#include <QtWidgets>
 #include<iostream>
 
-class Tool{
+class Player{
+    private:
+        int OyuncuID;
+        std::string OyuncuAdi;
+        int skor;
     public:
+        Player();
+        Player(int OyuncuID,std::string OyuncuAdi,int skor){
+        };
+};
+
+class Computer:Player{
+    private:
+    public:
+};
+
+class User:Player{
+    private:
+    public:
+};
+class Tool{
+    private:
         int strength;
         int level;
-    };
-
-class Paper: public Tool{
     public:
+        Tool();
+        Tool(int givenStrength,int givenLevel):strength{givenStrength},level{givenLevel}{};
+        void printData();
+    };
+void Tool::printData(){
+    std::cout <<"Strength:" << strength << std::endl;
+    std::cout << "Level: " << level << std::endl;
+}
+class Paper: public Tool{
+    private:
         int influence;
+    public:
+        Paper();
+        Paper(int givenLevel,int givenStrength,int givenInfluence){
+            influence = givenInfluence;
+        };
 };
 
 class SpcPaper: public Paper{
-    public:
+    private:
         int thickness;
+    public:
+        SpcPaper();
+        SpcPaper(int givenLevel,int givenStrength);
 };
 
 class Rock: public Tool{
-    public:
+    private:
         int soft;
+    public:
+        Rock();
+        Rock(int givenLevel,int givenStrength);
 };
 
 class HvRock: public Rock{
     public:
         int hotness;
+    public:
+        HvRock();
+        HvRock(int givenLevel,int givenStrength);
 };
 
 
 class Scissors: public Tool{
-    public:
+    private:
         int sharpness;
+    public:
+        Scissors();
+        Scissors(int givenLevel,int givenStrength);
 };
 
 class MasterScissors: public Scissors{
-    public:
+    private:
         int resistance;
+    public:
+        MasterScissors();
+        MasterScissors(int givenLevel,int givenStrength);
 };
 
 int main(int argc, char *argv[])
 {
 
-    srand (time(NULL));
+    /*int user_input;
+    std::cout << "1 - Makas\n2- Taş\n3- Kağıt\n" << std::endl;
+    std::cout << "Taş,Kağıt ve Makastan birini seçiniz: " << std::endl;
+    std::cin >> user_input;
+    if (user_input==1)
+    {
+        
+    }
+    else if (user_input==2)
+    {
+        
+    }
+    else if (user_input==3)
+    {
+        
+    }
+    else{
+        std::cout << "\nhata.\n" << std::endl;
+    }*/
+
+    Tool mytool = Tool(1,31);
+
+    return 0;
+}
+
+
+
+    /*srand (time(NULL));
     for(int i=0;i<5;i++){
         int rand_num;
         rand_num = rand() % 3 + 1;
@@ -59,15 +133,9 @@ int main(int argc, char *argv[])
            printf("3\n"); 
             
         }
-    }
-    Tool obj_1;
-    obj_1.strength = 0;
-    obj_1.level = 0;
+    }*/
 
-    printf("%d\n",obj_1.strength);
-
-
-/*
+    /*
     QApplication app(argc, argv);
     QWidget window;
     window.resize(320, 240);
@@ -80,5 +148,3 @@ int main(int argc, char *argv[])
         QApplication::translate("toplevel", "Top-level widget"));
     return app.exec();
 */
-    return 0;
-}
