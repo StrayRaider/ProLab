@@ -41,28 +41,22 @@ class MasterScissors: public Scissors{
 int main(int argc, char *argv[])
 {
 
-    Tool obj_1;
-    obj_1.strength = 0;
-    obj_1.level = 0;
-
-    printf("%d\n",obj_1.strength);
-
-int main(int argc, char *argv[])
-{
     srand (time(NULL));
-
-
-
     for(int i=0;i<5;i++){
         int rand_num;
         rand_num = rand() % 3 + 1;
+        //rock
         if(rand_num == 1){
-            
+           printf("1\n"); 
         }
+        //paper
         else if(rand_num == 2){
+           printf("2\n"); 
             
         }
+        //scissors
         else if(rand_num == 3){
+           printf("3\n"); 
             
         }
     }
@@ -72,24 +66,6 @@ int main(int argc, char *argv[])
 
     printf("%d\n",obj_1.strength);
 
-
-
-
-
-
-
-int main(int argc, char *argv[])
-{
-
-    Tool obj_1;
-    obj_1.strength = 0;
-    obj_1.level = 0;
-
-    printf("%d\n",obj_1.strength);
-
-    Paper pap_1;
-    pap_1.influence = 0;
-    printf("%d\n",pap_1.influence);
 
 /*
     QApplication app(argc, argv);
