@@ -124,16 +124,10 @@ int main(int argc, char *argv[]){
     else{
         std::cout << "\nhata.\n" << std::endl;
     }*/
-<<<<<<< HEAD
-    Paper mypaper = Paper(3);
-    mypaper.printData();
-    std::cout << mypaper.strength << std::endl; // List mylist;
-=======
     //Paper mypaper = Paper(3);
     //mypaper.printData();
     //std::cout << mypaper.strength << std::endl;
     // List mylist;
->>>>>>> refs/remotes/origin/main
     // mylist.tool = Tool(1,13);
     // mylist.tool.printData();
     return 0;
