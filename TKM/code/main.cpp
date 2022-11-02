@@ -25,8 +25,7 @@ private:
 public:
 };
 
-class Tool
-{
+class Tool{
 public:
     int strength;
     int level;
@@ -34,44 +33,28 @@ public:
     virtual void printData() = 0;
 };
 
-class Paper : public Tool
-{
-protected:
+class Paper : public Tool{
+    protected:
     int influence;
+    };
 
-public:
-    void printData()
-    {
-        std::cout << "ben kağıdım ab" << std::endl;
-    }
-        Paper(int givenStrength){
-            strength = givenStrength;
-        };
-
-};
-
-class SpcPaper : public Paper
-{
+class SpcPaper : public Paper{
 private:
     int thickness;
-
 public:
     SpcPaper();
     SpcPaper(int givenLevel, int givenStrength);
 };
 
-class Rock : public Tool
-{
+class Rock : public Tool{
 private:
     int soft;
-
 public:
     Rock();
     Rock(int givenLevel, int givenStrength);
 };
 
-class HvRock : public Rock
-{
+class HvRock : public Rock{
 public:
     int hotness;
 
@@ -80,8 +63,7 @@ public:
     HvRock(int givenLevel, int givenStrength);
 };
 
-class Scissors : public Tool
-{
+class Scissors : public Tool{
 private:
     int sharpness;
 
@@ -90,8 +72,7 @@ public:
     Scissors(int givenLevel, int givenStrength);
 };
 
-class MasterScissors : public Scissors
-{
+class MasterScissors : public Scissors{
 private:
     int resistance;
 
@@ -100,8 +81,7 @@ public:
     MasterScissors(int givenLevel, int givenStrength);
 };
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 
     /*int user_input;
     std::cout << "1 - Makas\n2- Taş\n3- Kağıt\n" << std::endl;
@@ -122,10 +102,9 @@ int main(int argc, char *argv[])
     else{
         std::cout << "\nhata.\n" << std::endl;
     }*/
-    Paper mypaper = Paper(3);
-    mypaper.printData();
-    std::cout << mypaper.strength << std::endl;
-    Tool mytool;
+    //Paper mypaper = Paper(3);
+    //mypaper.printData();
+    //std::cout << mypaper.strength << std::endl;
     // List mylist;
     // mylist.tool = Tool(1,13);
     // mylist.tool.printData();
