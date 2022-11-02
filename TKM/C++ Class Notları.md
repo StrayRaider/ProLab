@@ -40,8 +40,8 @@ o.c = 'a'; // Error, not accessible to object
 o.x = 123; // error, not accessible to object
 }
 ```
-```
 
+```
 ```cpp
 class MyBaseClass
 {
@@ -124,4 +124,49 @@ delete o;
   }
   ```
 
+## Constructors
 
+
+
+```cpp
+#include <iostream>
+#include <string>
+
+class Human{
+    private:
+        std::string name;
+        int age;
+    public:
+        Human(){ // this is a constructor
+            age = 1; // you can initialize here.
+        }
+        void setName(std::string givenName){
+            name = givenName;
+            std::cout << name << std::endl;
+        }
+};
+
+int main(int argc, char const *argv[])
+{
+    Human h1;
+    h1.setName("eren");
+    return 0;
+}
+```
+
+- overloaded constructor example:
+  
+  ```cpp
+  class Human
+  {
+  public:
+  Human()
+  {
+  // default constructor code here
+  }
+  Human(string humansName)
+  {
+  // overloaded constructor code here
+  }
+  };
+  ```
