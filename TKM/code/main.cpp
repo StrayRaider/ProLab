@@ -25,8 +25,7 @@ private:
 public:
 };
 
-class Tool
-{
+class Tool{
 public:
     int strength;
     int level;
@@ -34,11 +33,12 @@ public:
     virtual void printData() = 0;
 };
 
-class Paper : public Tool
-{
-protected:
+class Paper : public Tool{
+    protected:
     int influence;
+    };
 
+<<<<<<< HEAD
 public:
     void printData()
     {
@@ -52,24 +52,31 @@ public:
 
 class SpcPaper : public Paper
 {
+=======
+class SpcPaper : public Paper{
+>>>>>>> refs/remotes/origin/main
 private:
     int thickness;
-
 public:
     SpcPaper();
     SpcPaper(int givenLevel, int givenStrength);
 };
 
+<<<<<<< HEAD
 class Rock : public Tool
 {
+=======
+class Rock : public Tool{
+private:
+    int soft;
+>>>>>>> refs/remotes/origin/main
 public:
     int soft;
     Rock();
     Rock(int givenLevel, int givenStrength);
 };
 
-class HvRock : public Rock
-{
+class HvRock : public Rock{
 public:
     int hotness;
 
@@ -78,8 +85,7 @@ public:
     HvRock(int givenLevel, int givenStrength);
 };
 
-class Scissors : public Tool
-{
+class Scissors : public Tool{
 private:
     int sharpness;
 
@@ -88,8 +94,7 @@ public:
     Scissors(int givenLevel, int givenStrength);
 };
 
-class MasterScissors : public Scissors
-{
+class MasterScissors : public Scissors{
 private:
     int resistance;
 
@@ -98,8 +103,7 @@ public:
     MasterScissors(int givenLevel, int givenStrength);
 };
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 
     /*int user_input;
     std::cout << "1 - Makas\n2- Taş\n3- Kağıt\n" << std::endl;
@@ -120,9 +124,16 @@ int main(int argc, char *argv[])
     else{
         std::cout << "\nhata.\n" << std::endl;
     }*/
+<<<<<<< HEAD
     Paper mypaper = Paper(3);
     mypaper.printData();
     std::cout << mypaper.strength << std::endl; // List mylist;
+=======
+    //Paper mypaper = Paper(3);
+    //mypaper.printData();
+    //std::cout << mypaper.strength << std::endl;
+    // List mylist;
+>>>>>>> refs/remotes/origin/main
     // mylist.tool = Tool(1,13);
     // mylist.tool.printData();
     return 0;
