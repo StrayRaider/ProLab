@@ -44,10 +44,10 @@ public:
     {
         std::cout << "ben kağıdım ab" << std::endl;
     }
-        Paper(int givenStrength){
-            strength = givenStrength;
-        };
-
+    Paper(int givenStrength)
+    {
+        strength = givenStrength;
+    };
 };
 
 class SpcPaper : public Paper
@@ -62,10 +62,8 @@ public:
 
 class Rock : public Tool
 {
-private:
-    int soft;
-
 public:
+    int soft;
     Rock();
     Rock(int givenLevel, int givenStrength);
 };
@@ -124,9 +122,7 @@ int main(int argc, char *argv[])
     }*/
     Paper mypaper = Paper(3);
     mypaper.printData();
-    std::cout << mypaper.strength << std::endl;
-    Tool mytool;
-    // List mylist;
+    std::cout << mypaper.strength << std::endl; // List mylist;
     // mylist.tool = Tool(1,13);
     // mylist.tool.printData();
     return 0;
